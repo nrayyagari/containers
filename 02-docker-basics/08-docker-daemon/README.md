@@ -1,23 +1,40 @@
 # Docker Daemon
 
 ## Context & Problem
-This topic targets a practical operational failure mode in 02-docker-basics and prepares you to diagnose it with evidence.
+This topic explains how the Docker daemon brokers build, image, network, and container operations. In production, this matters because object-lifecycle mistakes quickly turn into accidental data loss, stale state, or misleading triage.
 
 ## First Principles
-Understand mechanism first, then command usage. Avoid tool memorization without system reasoning.
+- Docker operations make sense only when you keep images, containers, volumes, networks, and daemon state separate in your head.
+- Some Docker commands create objects, some mutate them, and some only reveal existing state; confusing those roles creates most day-2 mistakes.
+- The safest Docker workflow is inspection first, change second, cleanup last.
 
 ## Production Implementation
-Apply least privilege, explicit boundaries, and repeatable verification checks.
+Map the command you run to the object it mutates: image, container, volume, network, or daemon state. Safe Docker operation comes from understanding which state is replaceable and which state must be preserved.
 
 ## Troubleshooting Approach
-Collect observable evidence first, then decide corrective action.
+Start with direct evidence at the layer this topic controls, then expand outward only if the observed state matches expectations.
 
 ## Evolution & Alternatives
-Know when this approach is preferred and when an alternative is safer or simpler.
+Docker's user experience made containers mainstream, but many production stacks now split build, runtime, and orchestration concerns across separate tools. Learning Docker remains useful because it provides the cleanest introduction to the object model.
+
+## Lab Tie-In
+Use the lab to prove the mechanism, not just to finish a list of commands. Before you begin, decide which output line or state change will prove the concept above is real.
+
+### Commands You Will See
+- `docker pull alpine:3.20`
+- `docker run -d --name dk-lab alpine:3.20 sleep 300`
+- `docker inspect dk-lab --format "{{.Config.Image}} {{.State.Status}}"`
+- `docker exec dk-lab sh -c "id && hostname"`
+
+### What Success Looks Like
+- All steps executed without unresolved errors.
+- You can explain observed behavior from first principles.
+- You identified one failure mode and first diagnostic action.
+
+### Questions To Answer After The Lab
+- Which daemon/runtime signal is most useful when container starts fail?
+- What platform risk appears from unsafe daemon configuration defaults?
 
 ## Next Steps
-Run [LAB.md](./LAB.md), then capture one runbook note from your findings.
-
-## Zero-Confusion Summary
-- Success means you can explain both behavior and failure mode.
-- If you cannot explain output, rerun lab and verify assumptions.
+Run [LAB.md](./LAB.md) and do not mark it complete until you can explain both the mechanism and the failure mode.
+After that, continue to [Storage Driver](../09-storage-driver/README.md).

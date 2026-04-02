@@ -1,356 +1,91 @@
-# Containers - A Comprehensive Learning Journey
+# Containers Learning Repository
 
-> From Linux kernel fundamentals to Kubernetes readiness
+This repository teaches containers from first principles instead of starting with memorized commands. The goal is simple: after reading a topic and running its practice, you should be able to explain what the system is doing, what can fail, and which signal proves it.
 
-## Table of Contents
+## Context & Problem
+Container knowledge is often fragmented. People know how to run an image or copy a Compose file, but they do not always know which Linux primitive, runtime boundary, or control-plane decision is responsible for the behavior they see. That gap becomes expensive during incidents and migrations.
 
-1. [Fundamentals](#01-fundamentals)
-2. [Docker Basics](#02-docker-basics)
-3. [Image Building](#03-image-building)
-4. [Container Runtimes](#04-container-runtimes)
-5. [Networking](#05-networking)
-6. [Storage](#06-storage)
-7. [Security](#07-security)
-8. [Registry](#08-registry)
-9. [Orchestration Basics](#09-orchestration-basics)
-10. [Best Practices](#10-best-practices)
-11. [Troubleshooting](#11-troubleshooting)
-12. [Tools](#12-tools)
-13. [Advanced](#13-advanced)
-14. [Migration to Kubernetes](#14-migration-to-k8s)
+## How To Use This Repository
+1. Start with `01-fundamentals` and move in order unless you already understand the kernel and runtime layers deeply.
+2. For every topic, read `README.md` first so you understand the problem and the mechanism before you touch commands.
+3. If a `LAB.md` exists, treat it as proof work. Finish only when you can explain the observed output and the likely production failure mode.
+4. Keep short notes for each topic: mechanism, first signal to check, and first safe diagnostic action.
 
----
+## What Good Learning Looks Like
+- You can explain a container as a set of kernel and runtime boundaries, not as a black box.
+- You can separate image problems, runtime problems, network problems, storage problems, and policy problems instead of blending them together.
+- You can say what changed when the platform becomes Kubernetes and why Docker-era assumptions stop being enough.
 
-## 01 - Fundamentals
-*Linux kernel mechanisms that make containers possible*
+## Curriculum Map
+### 01 - Fundamentals
+Kernel primitives that make containers possible.
+- [Module README](./01-fundamentals/README.md)
 
-| Topic | Description |
-|-------|-------------|
-| 01-virtualization-basics | Evolution of virtualization, hypervisors vs containers |
-| 02-linux-namespaces | IPC, Mount, Network, PID, User, UTS namespaces |
-| 03-control-groups-cgroups | Resource limits: CPU, Memory, I/O, Blkio |
-| 04-union-filesystems | OverlayFS, AUFS, layer mechanics |
-| 05-process-isolation | Container = isolated process on host |
-| 06-kernel-features | Namespace APIs, cgroup v1/v2 |
-| 07-container-vs-vm | Key architectural differences |
-| 08-linux-capabilities | CAP_NET_BIND_SERVICE, privilege dropping |
-| 09-seccomp-apparmor | Syscall filtering, mandatory access control |
-| 10-namespaces-deep-dive | Each namespace type in exhaustive detail |
-| 11-cgroups-deep-dive | Controllers, hierarchies, resource control |
-| 12-isolation-summary | Putting it all together |
+### 02 - Docker Basics
+The Docker object model and daily operational workflow.
+- [Module README](./02-docker-basics/README.md)
 
----
+### 03 - Image Building
+How to build small, reproducible, and secure images.
+- [Module README](./03-image-building/README.md)
 
-## 02 - Docker Basics
-*Mastering the Docker ecosystem*
+### 04 - Container Runtimes
+The runtime stack from OCI contracts to running processes.
+- [Module README](./04-container-runtimes/README.md)
 
-| Topic | Description |
-|-------|-------------|
-| 01-cli-basics | docker run, ps, exec, logs, etc. |
-| 02-images | pull, tag, rmi, inspect |
-| 03-containers | create, start, stop, rm, logs |
-| 04-volumes | -v, --mount, volume management |
-| 05-networking-basics | bridge, host, none networks |
-| 06-dockerfile | Writing Dockerfiles from scratch |
-| 07-docker-compose | Multi-container orchestration |
-| 08-docker-daemon | Architecture, socket, API |
-| 09-storage-driver | overlay2, devicemapper, vfs |
-| 10-compose-yaml | compose.yaml syntax |
+### 05 - Networking
+Container packet flow, connectivity, and service reachability.
+- [Module README](./05-networking/README.md)
 
----
+### 06 - Storage
+Persistent data, mount semantics, and filesystem trade-offs.
+- [Module README](./06-storage/README.md)
 
-## 03 - Image Building
-*Creating efficient, secure container images*
+### 07 - Security
+Container hardening from image build to runtime policy.
+- [Module README](./07-security/README.md)
 
-| Topic | Description |
-|-------|-------------|
-| 01-dockerfile-basics | Anatomy of a Dockerfile |
-| 02-instructions | RUN, COPY, ADD, ENV, WORKDIR, etc. |
-| 03-multi-stage-builds | Reduce image size dramatically |
-| 04-layer-caching | Optimize build cache |
-| 05-base-images | alpine, debian, scratch, distroless |
-| 06-best-practices | Security, size, maintainability |
-| 07-registries | Where to store images |
-| 08-tags | Versioning, latest, immutable tags |
-| 09-build-args | ARG, build-time variables |
-| 10-build-secrets | Secrets without leaking in layers |
+### 08 - Registry
+Image distribution, provenance, and lifecycle control.
+- [Module README](./08-registry/README.md)
 
----
+### 09 - Orchestration Basics
+The control loops that manage containers at fleet scale.
+- [Module README](./09-orchestration-basics/README.md)
 
-## 04 - Container Runtimes
-*Understanding the runtime hierarchy*
+### 10 - Best Practices
+Operational habits that make container systems safer and cheaper.
+- [Module README](./10-best-practices/README.md)
 
-| Topic | Description |
-|-------|-------------|
-| 01-runc | OCI low-level runtime, container creation |
-| 02-containerd | High-level runtime, image management |
-| 03-cri | Container Runtime Interface |
-| 04-crio | Kubernetes-focused runtime |
-| 05-docker-vs-containerd | Architecture evolution |
-| 06-low-level-runtime | What actually creates containers |
-| 07-high-level-runtime | Image pulls, container lifecycle |
-| 08-shim-process | shimv2, containerd-shim |
-| 09-oci-spec | Runtime spec, image spec |
-| 10-runtime-classes | Configuring runtime classes |
+### 11 - Troubleshooting
+Evidence-first workflows for reducing incident MTTR.
+- [Module README](./11-troubleshooting/README.md)
 
----
+### 12 - Tools
+The container tooling ecosystem beyond plain Docker.
+- [Module README](./12-tools/README.md)
 
-## 05 - Networking
-*Container networking deep dive*
+### 13 - Advanced
+Isolation, performance, and runtime details beyond the defaults.
+- [Module README](./13-advanced/README.md)
 
-| Topic | Description |
-|-------|-------------|
-| 01-bridge-networking | docker0 bridge, iptables |
-| 02-host-networking | Host network mode |
-| 03-overlay-networking | Docker Swarm, VXLAN |
-| 04-macvlan-ipvlan | Direct network attachment |
-| 05-dns-service-discovery | Embedded DNS, service names |
-| 06-port-mapping | -p flag, host binding |
-| 07-network-namespaces | Linux network namespaces |
-| 08-docker-proxy | docker-proxy process |
-| 09-iptables-rules | NAT, forwarding, filtering |
-| 10-ipv6 | IPv6 in containers |
+### 14 - Migration to Kubernetes
+How Docker-era workloads change when the platform becomes Kubernetes.
+- [Module README](./14-migration-to-k8s/README.md)
 
----
+## Primary References Used To Verify Core Concepts
+These official references informed the current docs pass and anchor the core runtime, build, and Kubernetes concepts used across the repository.
+- https://docs.docker.com/build/building/multi-stage/
+- https://docs.docker.com/build/building/secrets/
+- https://docs.docker.com/reference/compose-file/
+- https://docs.docker.com/engine/security/rootless/
+- https://docs.docker.com/engine/storage/drivers/overlayfs-driver/
+- https://kubernetes.io/docs/concepts/architecture/cri/
+- https://kubernetes.io/docs/concepts/workloads/pods/
+- https://kubernetes.io/docs/concepts/containers/runtime-class
+- https://kubernetes.io/docs/concepts/configuration/secret/
+- https://containerd.io/docs/
+- https://docs.kernel.org/6.10/admin-guide/cgroup-v2.html
 
-## 06 - Storage
-*Persistent and ephemeral storage*
-
-| Topic | Description |
-|-------|-------------|
-| 01-bind-mounts | Host directory mounting |
-| 02-named-volumes | Docker-managed volumes |
-| 03-tmpfs-mounts | In-memory storage |
-| 04-volume-drivers | local, rexray, convoy |
-| 05-storage-drivers-overlay | overlay2 driver |
-| 06-nfs-volumes | Network filesystem volumes |
-| 07-volume-permissions | uid/gid, chmod |
-| 08-persistence-strategies | Data durability patterns |
-| 09-inode-management | inode exhaustion |
-| 10-backup-restore | Volume backup strategies |
-
----
-
-## 07 - Security
-*Hardening containers at every layer*
-
-| Topic | Description |
-|-------|-------------|
-| 01-user-namespace-mapping | Map UID/GID ranges |
-| 02-rootless-containers | Running without root |
-| 03-drop-capabilities | Drop ALL, add only required |
-| 04-seccomp-profiles | Syscall filtering |
-| 05-apparmor-profiles | Mandatory access control |
-| 06-selinux | Security-enhanced Linux |
-| 07-image-scanning | Vulnerability detection |
-| 08-trivy-snyk | Scanning tools |
-| 09-image-signing | Content trust, signatures |
-| 10-privileged-containers | Dangers and when needed |
-| 11-security-best-practices | Defense in depth |
-| 12-runtime-security | Runtime protection |
-
----
-
-## 08 - Registry
-*Managing container image distribution*
-
-| Topic | Description |
-|-------|-------------|
-| 01-docker-hub | Public registry |
-| 02-private-registry | Self-hosted registry |
-| 03-harbor | Enterprise registry |
-| 04-authentication | Token-based auth |
-| 05-push-pull | Image push/pull |
-| 06-mirrors-caching | Registry mirrors |
-| 07-content-trust | Docker Content Trust |
-| 08-garbage-collection | Cleaning up unused images |
-| 09-registry-api | REST API |
-| 10-artifact-management | OCI artifacts |
-
----
-
-## 09 - Orchestration Basics
-*Introduction to container orchestration*
-
-| Topic | Description |
-|-------|-------------|
-| 01-what-is-orchestration | Why we need orchestrators |
-| 02-service-discovery | Finding services dynamically |
-| 03-load-balancing | Distributing traffic |
-| 04-scaling | Horizontal/vertical scaling |
-| 05-health-checks | Liveness, readiness probes |
-| 06-self-healing | Auto-restart, replacement |
-| 07-rollout-rollback | Deployment strategies |
-| 08-config-management | ConfigMaps, secrets |
-| 09-scheduling | Where to place containers |
-| 10-reconciliation | Desired vs actual state |
-
----
-
-## 10 - Best Practices
-*Production-ready patterns*
-
-| Topic | Description |
-|-------|-------------|
-| 01-image-size | Minimizing image footprint |
-| 02-layer-optimization | Fewer layers, better caching |
-| 03-security-hardening | CIS benchmarks |
-| 04-multi-stage-builds | Minimal final images |
-| 05-healthchecks | HEALTHCHECK instruction |
-| 06-logging | Structured logging |
-| 07-resource-limits | Memory, CPU limits |
-| 08-immutable-tags | Pinning versions |
-| 09-minimal-base-images | distroless, scratch |
-| 10-ci-cd-integration | Pipeline best practices |
-
----
-
-## 11 - Troubleshooting
-*Debugging containers in production*
-
-| Topic | Description |
-|-------|-------------|
-| 01-logs | docker logs, journalctl |
-| 02-inside-container | nsenter, chroot |
-| 03-network-debugging | ping, curl, netcat |
-| 04-resource-issues | OOM, CPU throttling |
-| 05-process-analysis | ps, pgrep, pstree |
-| 06-disk-space | du, df, docker system df |
-| 07-dns-issues | /etc/resolv.conf, dig |
-| 08-exit-codes | Error code analysis |
-| 09-core-dumps | gdb, ulimit |
-| 10-tools-dive-ctop-sysdig | dive, ctop, sysdig |
-| 11-strace-ltrace | Syscall tracing |
-| 12-tcpdump-wireshark | Packet capture |
-| 13-htop-top | Process monitoring |
-| 14-sysdig-falco | Runtime security/syscalls |
-| 15-prometheus-metrics | Metrics collection |
-| 16-crictl-debug | CRI runtime debugging |
-| 17-nerdctl-debug | containerd CLI debugging |
-| 18-dive-image-analysis | Image layer analysis |
-| 19-cosign-signature-verification | Signature verification |
-| 20-garbage-collection-cleanup | docker system prune |
-
----
-
-## 12 - Tools
-*Alternative and complementary tools*
-
-| Topic | Description |
-|-------|-------------|
-| 01-podman | Daemonless container engine |
-| 02-buildah | Building images without Docker |
-| 03-nerdctl | containerd CLI |
-| 04-crictl | CRI-compatible CLI |
-| 05-skopeo | Image inspection/sync |
-| 06-docker-buildx | Extended build features |
-| 07-kompose | Docker Compose to Kubernetes |
-| 08-ctop | Container top |
-| 09-dive | Image layer analysis |
-| 10-labs-container-toolkit | Red Hat tools |
-
----
-
-## 13 - Advanced
-*Cutting-edge container technologies*
-
-| Topic | Description |
-|-------|-------------|
-| 01-rootless-mode | Rootless containers in depth |
-| 02-user-namespaces | Advanced mapping |
-| 03-cgroups-v2 | Unified hierarchy |
-| 04-fuse-overlayfs | FUSE-based overlay |
-| 05-image-distribution | Distribution specs |
-| 06-zfs-btrfs | Advanced filesystems |
-| 07-efi-secure-boot | Secure boot integration |
-| 08-gvisor-katata | Sandboxed containers |
-| 09-firecracker-microvm | MicroVM runtime |
-| 10-uds-uds | Unix domain sockets |
-
----
-
-## 14 - Migration to Kubernetes
-*Moving from standalone containers to K8s*
-
-| Topic | Description |
-|-------|-------------|
-| 01-docker-to-containerd | Runtime transition |
-| 02-cri-compatibility | CRI API |
-| 03-image-format | OCI image spec |
-| 04-pod-concept | Multi-container pods |
-| 05-deployment-strategies | Rolling, blue-green, canary |
-| 06-config-secrets | K8s ConfigMaps, Secrets |
-| 07-networking-changes | K8s networking model |
-| 08-storage-migration | PVs, PVCs, StorageClass |
-| 09-service-mesh | Istio, Linkerd |
-| 10-monitoring-observability | Prometheus, Jaeger |
-
----
-
-## Learning Path
-
-```
-01-fundamentals ──► 02-docker-basics ──► 03-image-building ──► 04-container-runtimes
-                           │                      │
-                           ▼                      ▼
-                     05-networking ◄──────── 06-storage
-                           │
-                           ▼
-                     07-security ──────────► 08-registry
-                           │
-                           ▼
-              ┌────────────┴────────────┐
-              ▼                         ▼
-       09-orchestration-basics    10-best-practices
-              │
-              ▼
-         11-troubleshooting
-              │
-              ▼
-         12-tools
-              │
-              ▼
-         13-advanced
-              │
-              ▼
-    14-migration-to-k8s
-```
-
----
-
-## Prerequisites
-
-- Linux basics (processes, files, permissions)
-- Command line familiarity
-- Understanding of networking fundamentals (IP, ports, DNS)
-
-## Quick Start
-
-```bash
-# Verify container environment
-docker --version
-containerd --version
-runc --version
-
-# Run your first container
-docker run hello-world
-
-# Explore available images
-docker images
-```
-
----
-
-## Resources
-
-- [Docker Documentation](https://docs.docker.com/)
-- [OCI Specifications](https://opencontainers.org/specs/)
-- [Kubernetes Documentation](https://kubernetes.io/docs/)
-- [Linux Kernel Namespaces](https://man7.org/linux/man-pages/man7/namespaces.7.html)
-- [cgroup Documentation](https://www.kernel.org/doc/Documentation/cgroup-v2.txt)
-
----
-
-## License
-
-MIT
+## Completion Standard
+By the end of this repository, you should be able to trace a containerized workload from image build to runtime execution, explain which boundary is failing when something breaks, and choose the first diagnostic step with intent instead of guesswork.

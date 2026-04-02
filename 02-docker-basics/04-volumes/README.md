@@ -1,23 +1,40 @@
 # Volumes
 
 ## Context & Problem
-This topic targets a practical operational failure mode in 02-docker-basics and prepares you to diagnose it with evidence.
+This topic explains how Docker keeps data outside an ephemeral container filesystem. In production, this matters because object-lifecycle mistakes quickly turn into accidental data loss, stale state, or misleading triage.
+Persistent data should not be confused with the container writable layer. Those are different lifecycles with different failure modes.
 
 ## First Principles
-Understand mechanism first, then command usage. Avoid tool memorization without system reasoning.
+- Container storage has multiple lifecycles: image layers, writable layers, volumes, and external storage backends.
+- Copy-on-write and overlay behavior can change both performance and the meaning of a write operation.
+- Durability depends on where data lives, not on whether the application wrote it successfully once.
 
 ## Production Implementation
-Apply least privilege, explicit boundaries, and repeatable verification checks.
+Map the command you run to the object it mutates: image, container, volume, network, or daemon state. Safe Docker operation comes from understanding which state is replaceable and which state must be preserved.
 
 ## Troubleshooting Approach
-Collect observable evidence first, then decide corrective action.
+Ask three questions early: where does the data live, who owns it, and what path exposes it to the process? That separates permission problems from backend problems and durability problems from simple path mistakes.
 
 ## Evolution & Alternatives
-Know when this approach is preferred and when an alternative is safer or simpler.
+Docker's user experience made containers mainstream, but many production stacks now split build, runtime, and orchestration concerns across separate tools. Learning Docker remains useful because it provides the cleanest introduction to the object model.
+
+## Lab Tie-In
+Use the lab to prove the mechanism, not just to finish a list of commands. Before you begin, decide which output line or state change will prove the concept above is real.
+
+### Commands You Will See
+- `docker volume create vol-lab`
+- `docker run --rm -v vol-lab:/data alpine:3.20 sh -c "echo persisted > /data/value.txt"`
+- `docker run --rm -v vol-lab:/data alpine:3.20 cat /data/value.txt`
+
+### What Success Looks Like
+- All steps executed without unresolved errors.
+- You can explain observed behavior from first principles.
+- You identified one failure mode and first diagnostic action.
+
+### Questions To Answer After The Lab
+- Which output proves data persistence across container lifecycle?
+- What data-loss scenario appears if teams store state only in writable layers?
 
 ## Next Steps
-Run [LAB.md](./LAB.md), then capture one runbook note from your findings.
-
-## Zero-Confusion Summary
-- Success means you can explain both behavior and failure mode.
-- If you cannot explain output, rerun lab and verify assumptions.
+Run [LAB.md](./LAB.md) and do not mark it complete until you can explain both the mechanism and the failure mode.
+After that, continue to [Networking Basics](../05-networking-basics/README.md).

@@ -1,23 +1,40 @@
 # Docker Compose
 
 ## Context & Problem
-This topic targets a practical operational failure mode in 02-docker-basics and prepares you to diagnose it with evidence.
+This topic explains how Compose describes and runs multi-container applications. In production, this matters because object-lifecycle mistakes quickly turn into accidental data loss, stale state, or misleading triage.
 
 ## First Principles
-Understand mechanism first, then command usage. Avoid tool memorization without system reasoning.
+- Docker operations make sense only when you keep images, containers, volumes, networks, and daemon state separate in your head.
+- Some Docker commands create objects, some mutate them, and some only reveal existing state; confusing those roles creates most day-2 mistakes.
+- The safest Docker workflow is inspection first, change second, cleanup last.
 
 ## Production Implementation
-Apply least privilege, explicit boundaries, and repeatable verification checks.
+Map the command you run to the object it mutates: image, container, volume, network, or daemon state. Safe Docker operation comes from understanding which state is replaceable and which state must be preserved.
 
 ## Troubleshooting Approach
-Collect observable evidence first, then decide corrective action.
+Start with direct evidence at the layer this topic controls, then expand outward only if the observed state matches expectations.
 
 ## Evolution & Alternatives
-Know when this approach is preferred and when an alternative is safer or simpler.
+Compose evolved from a versioned file format into the Compose Specification implemented by modern Compose v2 tooling. The important lesson is that the file describes application topology, not just a shortcut for running several `docker run` commands.
+
+## Lab Tie-In
+Use the lab to prove the mechanism, not just to finish a list of commands. Before you begin, decide which output line or state change will prove the concept above is real.
+
+### Commands You Will See
+- `docker network create net-lab`
+- `docker run -d --name net-a --network net-lab alpine:3.20 sleep 300`
+- `docker run -d --name net-b --network net-lab alpine:3.20 sleep 300`
+- `docker exec net-a ping -c1 net-b`
+
+### What Success Looks Like
+- All steps executed without unresolved errors.
+- You can explain observed behavior from first principles.
+- You identified one failure mode and first diagnostic action.
+
+### Questions To Answer After The Lab
+- Which Compose behavior in this topic improves repeatability most?
+- What failure mode appears when service dependencies are implicit?
 
 ## Next Steps
-Run [LAB.md](./LAB.md), then capture one runbook note from your findings.
-
-## Zero-Confusion Summary
-- Success means you can explain both behavior and failure mode.
-- If you cannot explain output, rerun lab and verify assumptions.
+Run [LAB.md](./LAB.md) and do not mark it complete until you can explain both the mechanism and the failure mode.
+After that, continue to [Docker Daemon](../08-docker-daemon/README.md).

@@ -1,23 +1,39 @@
 # High Level Runtime
 
 ## Context & Problem
-This topic targets a practical operational failure mode in 04-container-runtimes and prepares you to diagnose it with evidence.
+This topic explains what higher-level runtimes add around images, snapshots, shims, and lifecycle. In production, this matters because runtime-layer confusion leads engineers to inspect or restart the wrong component.
 
 ## First Principles
-Understand mechanism first, then command usage. Avoid tool memorization without system reasoning.
+- Runtime stacks are layered and each layer has a different responsibility.
+- High-level managers handle images, snapshots, and lifecycle; low-level runtimes turn an OCI bundle into a running process.
+- The authoritative troubleshooting tool depends on which layer created and now manages the workload.
 
 ## Production Implementation
-Apply least privilege, explicit boundaries, and repeatable verification checks.
+Decide which layer is authoritative for the workload you are examining. For Kubernetes-managed containers, `crictl` and runtime-manager state usually matter more than Docker output, and low-level runtime evidence matters more than guesses.
 
 ## Troubleshooting Approach
-Collect observable evidence first, then decide corrective action.
+Follow the request path one layer at a time: kubelet or CLI, runtime manager, shim, low-level runtime, and then the process itself. Restart nothing until you know which hop is lying or failing.
 
 ## Evolution & Alternatives
-Know when this approach is preferred and when an alternative is safer or simpler.
+The runtime ecosystem moved toward clearer interfaces and smaller responsibilities. That made the stack more composable, but it also means operators must know which layer they are standing on.
+
+## Lab Tie-In
+Use the lab to prove the mechanism, not just to finish a list of commands. Before you begin, decide which output line or state change will prove the concept above is real.
+
+### Commands You Will See
+- `ps -ef | grep -E "containerd|shim|runc" | grep -v grep | head -n 30`
+- `docker run -d --name rt-lab alpine:3.20 sleep 300`
+- `docker inspect rt-lab --format "{{.Id}} {{.State.Pid}}"`
+
+### What Success Looks Like
+- All steps executed without unresolved errors.
+- You can explain observed behavior from first principles.
+- You identified one failure mode and first diagnostic action.
+
+### Questions To Answer After The Lab
+- Which output proves high-level manager control over container lifecycle?
+- What operational risk appears if high-level and low-level roles are confused?
 
 ## Next Steps
-Run [LAB.md](./LAB.md), then capture one runbook note from your findings.
-
-## Zero-Confusion Summary
-- Success means you can explain both behavior and failure mode.
-- If you cannot explain output, rerun lab and verify assumptions.
+Run [LAB.md](./LAB.md) and do not mark it complete until you can explain both the mechanism and the failure mode.
+After that, continue to [Shim Process](../08-shim-process/README.md).
