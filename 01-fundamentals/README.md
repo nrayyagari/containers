@@ -1,16 +1,22 @@
-# 01 Fundamentals
+# Fundamentals
 
 ## Context & Problem
-Without Linux fundamentals, container behavior appears random during security and reliability incidents.
+Linux kernel isolation primitives behind containers.
 
 ## First Principles
-Namespaces, cgroups, capabilities, and syscall controls define real isolation boundaries.
+Namespaces isolate visibility, cgroups isolate resources, and privilege controls reduce blast radius.
 
 ## Production Implementation
-Build mental models from kernel primitives before higher-level tooling abstractions.
+Collect kernel-level evidence before changing policies or runtime settings.
 
 ## Troubleshooting Approach
-Use process, namespace, and cgroup evidence before changing runtime configuration.
+Trace symptom to namespace, cgroup, capability, or syscall boundary.
+
+## Evolution & Alternatives
+Containers evolved from process isolation primitives, while VMs provide hardware-level isolation with more overhead.
+
+## Next Steps
+Proceed to Docker basics to connect kernel primitives with day-2 operations.
 
 ## Topic Map
 - [01-virtualization-basics](./01-virtualization-basics/README.md) | [Lab](./01-virtualization-basics/LAB.md)
@@ -27,9 +33,6 @@ Use process, namespace, and cgroup evidence before changing runtime configuratio
 - [12-isolation-summary](./12-isolation-summary/README.md) | [Lab](./12-isolation-summary/LAB.md)
 
 ## Zero-Confusion Summary
-- What it is:
-  - A structured module with practice-first learning.
-- What it is not:
-  - It is not theory-only reading material.
-- When to use:
-  - Use it sequentially and complete each topic lab.
+- Read topic README first.
+- Run LAB step-by-step in order.
+- Mark lab complete only when Verify and Answer Key pass criteria are satisfied.

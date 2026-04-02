@@ -1,26 +1,22 @@
-# 14 Migration to Kubernetes: Security-Aware Transition Path
+# Migration To K8s
 
 ## Context & Problem
-Migrating from standalone containers to Kubernetes changes runtime, networking, identity, policy, and operations. Teams fail migrations when they map Docker-only mental models directly to Kubernetes.
+Practical migration path from container-only to Kubernetes-native operations.
 
 ## First Principles
-Kubernetes adds control-plane mediated execution. Runtime decisions, service discovery, storage, rollout safety, and security posture are policy-driven rather than host-local defaults.
+Kubernetes introduces desired-state API, pod semantics, policy controls, and declarative rollout.
 
 ## Production Implementation
-- Standardize runtime tooling around CRI-aware commands.
-- Use immutable artifacts and digest pinning.
-- Separate config from secrets.
-- Adopt safe rollout and rollback patterns.
-- Build migration observability before cutover.
+Migrate in waves with runtime, networking, storage, and observability validation gates.
 
 ## Troubleshooting Approach
-Trace failures by layer: runtime -> pod/workload -> service/network -> storage -> policy -> observability.
+Separate app defects from platform policy and control-plane failures.
 
 ## Evolution & Alternatives
-This path reflects modern Kubernetes operations after dockershim removal and widespread policy-first platform engineering.
+Modern migrations use progressive rollout and policy guardrails over big-bang cutovers.
 
 ## Next Steps
-Use `DATADOG-K8S-SECURITY-STUDY.md` with `repos/kubernetes` security/networking modules for deeper practice.
+Pair this with repositories under repos/kubernetes for deeper cluster controls.
 
 ## Topic Map
 - [01-docker-to-containerd](./01-docker-to-containerd/README.md) | [Lab](./01-docker-to-containerd/LAB.md)
@@ -35,11 +31,6 @@ Use `DATADOG-K8S-SECURITY-STUDY.md` with `repos/kubernetes` security/networking 
 - [10-monitoring-observability](./10-monitoring-observability/README.md) | [Lab](./10-monitoring-observability/LAB.md)
 
 ## Zero-Confusion Summary
-- What it is:
-  - A practical migration module from container-only operations to Kubernetes-native operations.
-- What it is not:
-  - It is not a full Kubernetes curriculum by itself.
-- When to use:
-  - Use when preparing workloads and teams for production Kubernetes migration.
-- When not to use:
-  - Do not treat this as optional if your platform moves to Kubernetes.
+- Read topic README first.
+- Run LAB step-by-step in order.
+- Mark lab complete only when Verify and Answer Key pass criteria are satisfied.

@@ -1,67 +1,41 @@
 # Pod Concept Lab
 
 ## Goal
-Understand pod-style co-location using shared networking and process behavior.
+Understand pod-style co-location and why it is not equivalent to arbitrary container grouping.
 
 ## Prerequisites
-- Docker installed
+- Docker installed.
 
 ## Steps
-1. Create a shared network:
-   ```bash
-   docker network create pod-sim-net
-   ```
-2. Start a web container:
-   ```bash
-   docker run -d --name pod-app --network pod-sim-net nginx:1.27-alpine
-   ```
-3. Start a "sidecar-like" diagnostics container in same network:
-   ```bash
-   docker run --rm --name pod-sidecar --network pod-sim-net alpine:3.20 sh -c 'apk add --no-cache curl >/dev/null && curl -I http://pod-app'
-   ```
-4. Inspect communication assumption:
-   ```bash
-   docker exec pod-app hostname
-   docker network inspect pod-sim-net | head -n 40
-   ```
-5. Record differences between this simulation and real Kubernetes pod behavior.
+1. Create shared test network.
+   COMMAND: docker network create pod-sim-net
+2. Start app container.
+   COMMAND: docker run -d --name pod-app --network pod-sim-net nginx:1.27-alpine
+3. Run sidecar-like check container.
+   COMMAND: docker run --rm --network pod-sim-net alpine:3.20 sh -c 'apk add --no-cache curl >/dev/null && curl -I http://pod-app'
+4. Capture differences from real Kubernetes pod behavior.
+
+## Expected Observations
+- Sidecar-like container reaches app over shared network.
+- Shared network alone does not equal full pod lifecycle semantics.
+- You can list at least two differences from real pods.
 
 ## Verify
-- Sidecar-like container reaches app container by service name.
-- You can explain at least two differences between shared Docker network and real pod namespaces.
-- You identified one case where sidecar pattern is appropriate.
+- Connectivity test succeeds.
+- You documented two accurate pod-vs-network differences.
+- You identified one valid sidecar use case.
 
 ## Cleanup
-- `docker rm -f pod-app || true`
-- `docker network rm pod-sim-net || true`
-
-## Next
-Practice with real pods in `repos/kubernetes` to observe native behavior.
+- COMMAND: docker rm -f pod-app 2>/dev/null || true
+- COMMAND: docker network rm pod-sim-net 2>/dev/null || true
 
 ## Concept Check
-- Why is "one pod = one container" an incomplete mental model?
-- Which workload pair belongs together in one pod, and which should be split?
-- Which pod-level signal matters most when debugging crash loops?
+- Why is one-pod-equals-one-container an incomplete model?
+- What should never be colocated in one pod?
+- Which pod-level signal is critical during crash-loop triage?
 
 ## Why This Lab Proves Understanding
-- Verify checks both command execution and architectural reasoning.
-- Cleanup confirms you can safely reset test artifacts.
+- You validated both behavioral and architectural differences.
 
 ## Answer Key
-A lab is considered successful only when every Verify condition is true and cleanup is completed.
-
-Pass criteria (all required):
-- [ ] Sidecar-like container reaches app container by service name.
-- [ ] You can explain at least two differences between shared Docker network and real pod namespaces.
-- [ ] You identified one case where sidecar pattern is appropriate.
-- [ ] Cleanup commands executed successfully.
-
-Fail criteria (any one means FAIL):
-- Any Verify condition not met.
-- Conceptual comparison is inaccurate.
-- Environment not in clean state after cleanup.
-
-If failed, record:
-- Exact command that failed.
-- Error output.
-- Root cause and fix applied before rerun.
+Pass when all Verify points are satisfied and cleanup is complete.

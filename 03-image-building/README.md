@@ -1,16 +1,22 @@
-# 03 Image Building
+# Image Building
 
 ## Context & Problem
-Weak image build practices increase attack surface, CI time, and production drift.
+Deterministic, secure, and efficient image creation patterns.
 
 ## First Principles
-Dockerfile instruction order and base image selection drive artifact quality.
+Instruction order defines layer cache behavior, image size, and security posture.
 
 ## Production Implementation
-Use deterministic builds and inspect output before promoting images.
+Use minimal base images, controlled build context, and reproducibility checks.
 
 ## Troubleshooting Approach
-For build regressions, compare layer history and build context changes first.
+Inspect Dockerfile order and layer history before blaming runtime.
+
+## Evolution & Alternatives
+BuildKit and multi-stage designs replaced many monolithic image build patterns.
+
+## Next Steps
+Proceed to runtime internals to understand execution behavior under orchestration.
 
 ## Topic Map
 - [01-dockerfile-basics](./01-dockerfile-basics/README.md) | [Lab](./01-dockerfile-basics/LAB.md)
@@ -25,9 +31,6 @@ For build regressions, compare layer history and build context changes first.
 - [10-build-secrets](./10-build-secrets/README.md) | [Lab](./10-build-secrets/LAB.md)
 
 ## Zero-Confusion Summary
-- What it is:
-  - A structured module with practice-first learning.
-- What it is not:
-  - It is not theory-only reading material.
-- When to use:
-  - Use it sequentially and complete each topic lab.
+- Read topic README first.
+- Run LAB step-by-step in order.
+- Mark lab complete only when Verify and Answer Key pass criteria are satisfied.

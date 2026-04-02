@@ -1,31 +1,23 @@
-# Monitoring and Observability
+# Monitoring Observability
 
 ## Context & Problem
-Migration incidents remain unresolved when teams only watch host CPU/memory and ignore Kubernetes signals.
+This topic targets a practical operational failure mode in 14-migration-to-k8s and prepares you to diagnose it with evidence.
 
 ## First Principles
-Reliable diagnosis needs correlated metrics, logs, traces, events, and rollout state.
+Understand mechanism first, then command usage. Avoid tool memorization without system reasoning.
 
 ## Production Implementation
-Define migration SLOs and baseline signals pre-cutover; enforce post-change checks.
+Apply least privilege, explicit boundaries, and repeatable verification checks.
 
 ## Troubleshooting Approach
-Correlate deployment change with pod events, logs, and error/latency signals.
+Collect observable evidence first, then decide corrective action.
+
+## Evolution & Alternatives
+Know when this approach is preferred and when an alternative is safer or simpler.
 
 ## Next Steps
-Run baseline->change->correlate flow and produce reusable checklist.
-
-## Hands-on Lab
-Use [LAB.md](./LAB.md) to practice and verify this concept.
+Run [LAB.md](./LAB.md), then capture one runbook note from your findings.
 
 ## Zero-Confusion Summary
-- What it is:
-  - Monitoring and Observability as a Kubernetes migration control area.
-- What it is not:
-  - It is not a standalone migration strategy.
-- When to use:
-  - Use it when this layer becomes a migration blocker or risk.
-- If you truly understand this topic, you can explain:
-  - The problem it solves.
-  - The mechanism involved.
-  - One failure mode and fix path.
+- Success means you can explain both behavior and failure mode.
+- If you cannot explain output, rerun lab and verify assumptions.

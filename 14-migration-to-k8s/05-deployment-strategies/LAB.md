@@ -1,73 +1,43 @@
 # Deployment Strategies Lab
 
 ## Goal
-Evaluate rollout options and practice safe rollback logic for Kubernetes migration.
+Practice rollout and rollback flow with explicit verification.
 
 ## Prerequisites
-- `kubectl` connected to a test cluster (kind/minikube acceptable)
+- kubectl access to a test cluster.
 
 ## Steps
-1. Create baseline deployment:
-   ```bash
-   kubectl create deployment rollout-demo --image=nginx:1.27-alpine
-   kubectl expose deployment rollout-demo --port=80 --type=ClusterIP
-   ```
-2. Configure rolling strategy and verify:
-   ```bash
-   kubectl patch deployment rollout-demo -p '{"spec":{"strategy":{"type":"RollingUpdate","rollingUpdate":{"maxUnavailable":1,"maxSurge":1}}}}'
-   kubectl rollout status deployment/rollout-demo
-   ```
-3. Trigger update:
-   ```bash
-   kubectl set image deployment/rollout-demo nginx=nginx:1.27
-   kubectl rollout status deployment/rollout-demo
-   ```
-4. View rollout history:
-   ```bash
-   kubectl rollout history deployment/rollout-demo
-   ```
-5. Roll back to previous revision:
-   ```bash
-   kubectl rollout undo deployment/rollout-demo
-   kubectl rollout status deployment/rollout-demo
-   ```
+1. Create deployment.
+   COMMAND: kubectl create deployment rollout-demo --image=nginx:1.27-alpine
+2. Update image and watch rollout.
+   COMMAND: kubectl set image deployment/rollout-demo nginx=nginx:1.27
+   COMMAND: kubectl rollout status deployment/rollout-demo
+3. Inspect rollout history.
+   COMMAND: kubectl rollout history deployment/rollout-demo
+4. Execute rollback and verify.
+   COMMAND: kubectl rollout undo deployment/rollout-demo
+   COMMAND: kubectl rollout status deployment/rollout-demo
+
+## Expected Observations
+- Rollout completes with revision history.
+- Rollback path is functional and observable.
+- You can describe trigger conditions for rollback.
 
 ## Verify
-- Rolling update completes successfully.
-- Rollout history shows at least one previous revision.
-- Rollback returns deployment to healthy state.
+- Successful rollout observed.
+- Successful rollback observed.
+- You documented one production rollback trigger.
 
 ## Cleanup
-- `kubectl delete svc rollout-demo`
-- `kubectl delete deployment rollout-demo`
-
-## Next
-Add canary tooling only after baseline rolling + rollback is reliable.
+- COMMAND: kubectl delete deployment rollout-demo --ignore-not-found
 
 ## Concept Check
-- Why is rollback speed often more important than perfect prevention?
-- What readiness/probe mistake can make rolling updates unsafe?
-- When should you prefer canary over plain rolling update?
+- Why is rollback speed a core reliability metric?
+- Which probe misconfiguration can break safe rollouts?
+- When should canary be used over rolling update?
 
 ## Why This Lab Proves Understanding
-- Verify checks full release cycle: deploy, update, observe, recover.
-- Cleanup confirms disciplined teardown in shared test clusters.
+- You exercised full release safety cycle, not only deployment creation.
 
 ## Answer Key
-A lab is considered successful only when every Verify condition is true and cleanup is completed.
-
-Pass criteria (all required):
-- [ ] Rolling update completes successfully.
-- [ ] Rollout history shows at least one previous revision.
-- [ ] Rollback returns deployment to healthy state.
-- [ ] Cleanup commands executed successfully.
-
-Fail criteria (any one means FAIL):
-- Any Verify condition not met.
-- Rollback path not validated.
-- Environment not in clean state after cleanup.
-
-If failed, record:
-- Exact command that failed.
-- Error output.
-- Root cause and fix applied before rerun.
+Pass when all Verify points are satisfied and cleanup is complete.

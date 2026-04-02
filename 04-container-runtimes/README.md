@@ -1,16 +1,22 @@
-# 04 Container Runtimes
+# Container Runtimes
 
 ## Context & Problem
-Runtime-layer confusion causes slow incident resolution in container and Kubernetes platforms.
+Runtime stack internals from manager to low-level execution.
 
 ## First Principles
-Container runtime stacks separate management, shims, and low-level execution responsibilities.
+OCI defines contract; runtime manager orchestrates lifecycle; low-level runtime executes process.
 
 ## Production Implementation
-Map symptoms to the correct runtime layer before remediation actions.
+Troubleshoot by mapping symptom to correct runtime layer using process and CRI evidence.
 
 ## Troubleshooting Approach
-Use service/process/runtime metadata to isolate root cause quickly.
+Follow chain: control plane to CRI to runtime manager to low-level runtime.
+
+## Evolution & Alternatives
+Dockershim removal made CRI knowledge mandatory for Kubernetes operations.
+
+## Next Steps
+Proceed to migration-to-k8s and map runtime knowledge to cluster operations.
 
 ## Topic Map
 - [01-runc](./01-runc/README.md) | [Lab](./01-runc/LAB.md)
@@ -25,9 +31,6 @@ Use service/process/runtime metadata to isolate root cause quickly.
 - [10-runtime-classes](./10-runtime-classes/README.md) | [Lab](./10-runtime-classes/LAB.md)
 
 ## Zero-Confusion Summary
-- What it is:
-  - A structured module with practice-first learning.
-- What it is not:
-  - It is not theory-only reading material.
-- When to use:
-  - Use it sequentially and complete each topic lab.
+- Read topic README first.
+- Run LAB step-by-step in order.
+- Mark lab complete only when Verify and Answer Key pass criteria are satisfied.

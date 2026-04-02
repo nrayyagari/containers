@@ -1,16 +1,22 @@
-# 02 Docker Basics
+# Docker Basics
 
 ## Context & Problem
-Docker basics are required to avoid lifecycle, storage, and networking mistakes in day-to-day operations.
+Core Docker object lifecycle and runtime operations.
 
 ## First Principles
-Images are immutable templates; containers are runtime instances with mutable state.
+Image is immutable template, container is runtime instance, volume stores persistent data, network defines reachability.
 
 ## Production Implementation
-Use explicit create/run/inspect/remove workflows with clear verification points.
+Operate with explicit create, inspect, verify, and cleanup checkpoints.
 
 ## Troubleshooting Approach
-Inspect object metadata first, then adjust commands or configuration.
+Use object metadata and logs before modifying configs.
+
+## Evolution & Alternatives
+Docker UX popularized containers; production platforms now rely on CRI-aware runtime internals.
+
+## Next Steps
+Proceed to image building to control artifact quality and supply-chain risk.
 
 ## Topic Map
 - [01-cli-basics](./01-cli-basics/README.md) | [Lab](./01-cli-basics/LAB.md)
@@ -25,9 +31,6 @@ Inspect object metadata first, then adjust commands or configuration.
 - [10-compose-yaml](./10-compose-yaml/README.md) | [Lab](./10-compose-yaml/LAB.md)
 
 ## Zero-Confusion Summary
-- What it is:
-  - A structured module with practice-first learning.
-- What it is not:
-  - It is not theory-only reading material.
-- When to use:
-  - Use it sequentially and complete each topic lab.
+- Read topic README first.
+- Run LAB step-by-step in order.
+- Mark lab complete only when Verify and Answer Key pass criteria are satisfied.

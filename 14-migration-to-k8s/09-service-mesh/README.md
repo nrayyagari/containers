@@ -1,31 +1,23 @@
 # Service Mesh
 
 ## Context & Problem
-At scale, per-service implementation of mTLS/retries/auth policy becomes inconsistent and fragile.
+This topic targets a practical operational failure mode in 14-migration-to-k8s and prepares you to diagnose it with evidence.
 
 ## First Principles
-Mesh centralizes traffic/security policy in infrastructure layer.
+Understand mechanism first, then command usage. Avoid tool memorization without system reasoning.
 
 ## Production Implementation
-Adopt mesh where policy consistency and identity controls provide measurable value.
+Apply least privilege, explicit boundaries, and repeatable verification checks.
 
 ## Troubleshooting Approach
-Debug app vs mesh by separating policy, proxy, and app-layer signals.
+Collect observable evidence first, then decide corrective action.
+
+## Evolution & Alternatives
+Know when this approach is preferred and when an alternative is safer or simpler.
 
 ## Next Steps
-Use this lab to assess fit and trade-offs realistically.
-
-## Hands-on Lab
-Use [LAB.md](./LAB.md) to practice and verify this concept.
+Run [LAB.md](./LAB.md), then capture one runbook note from your findings.
 
 ## Zero-Confusion Summary
-- What it is:
-  - Service Mesh as a Kubernetes migration control area.
-- What it is not:
-  - It is not a standalone migration strategy.
-- When to use:
-  - Use it when this layer becomes a migration blocker or risk.
-- If you truly understand this topic, you can explain:
-  - The problem it solves.
-  - The mechanism involved.
-  - One failure mode and fix path.
+- Success means you can explain both behavior and failure mode.
+- If you cannot explain output, rerun lab and verify assumptions.

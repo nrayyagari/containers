@@ -1,80 +1,43 @@
-# Config and Secrets Lab
+# Config Secrets Lab
 
 ## Goal
-Inject non-sensitive config and sensitive values separately into a workload.
+Separate non-sensitive config from secrets and validate runtime injection.
 
 ## Prerequisites
-- `kubectl` connected to a test cluster
+- kubectl access to a test cluster.
 
 ## Steps
-1. Create config and secret:
-   ```bash
-   kubectl create configmap app-config --from-literal=APP_MODE=staging
-   kubectl create secret generic app-secret --from-literal=DB_PASSWORD='p@ssw0rd-demo'
-   ```
-2. Create pod using both resources:
-   ```bash
-   cat <<'YAML' | kubectl apply -f -
-   apiVersion: v1
-   kind: Pod
-   metadata:
-     name: config-secret-demo
-   spec:
-     containers:
-     - name: app
-       image: alpine:3.20
-       command: ["sh","-c","sleep 3600"]
-       envFrom:
-       - configMapRef:
-           name: app-config
-       - secretRef:
-           name: app-secret
-   YAML
-   ```
-3. Verify injected values:
-   ```bash
-   kubectl exec config-secret-demo -- printenv | grep APP_MODE
-   kubectl exec config-secret-demo -- printenv | grep DB_PASSWORD
-   ```
-4. Confirm secret object exists but should never be printed in plaintext logs.
-5. Record a secret-rotation trigger event for your team.
+1. Create config and secret.
+   COMMAND: kubectl create configmap app-config --from-literal=APP_MODE=staging
+   COMMAND: kubectl create secret generic app-secret --from-literal=DB_PASSWORD=demo-pass
+2. Create pod consuming both resources.
+   COMMAND: kubectl run config-check --image=alpine:3.20 --restart=Never --env-from=configmap/app-config --env-from=secret/app-secret --command -- sh -c 'sleep 300'
+3. Validate env injection.
+   COMMAND: kubectl exec config-check -- printenv | grep APP_MODE
+   COMMAND: kubectl exec config-check -- printenv | grep DB_PASSWORD
+
+## Expected Observations
+- Both config and secret values are injected from Kubernetes resources.
+- Resource types remain separate and purpose-specific.
+- You can explain rotation without rebuilding image.
 
 ## Verify
-- Pod reads config and secret values from Kubernetes objects.
-- Config and secret are stored as separate resources.
-- You can explain why secret rotation should not require image rebuild.
+- Config value resolved in pod.
+- Secret value resolved in pod.
+- Rotation rationale documented.
 
 ## Cleanup
-- `kubectl delete pod config-secret-demo --ignore-not-found`
-- `kubectl delete configmap app-config --ignore-not-found && kubectl delete secret app-secret --ignore-not-found`
-
-## Next
-Integrate external secret manager and rotation automation.
+- COMMAND: kubectl delete pod config-check --ignore-not-found
+- COMMAND: kubectl delete configmap app-config --ignore-not-found
+- COMMAND: kubectl delete secret app-secret --ignore-not-found
 
 ## Concept Check
-- Why is baking secrets into image layers dangerous even in private registries?
-- What operational event should trigger secret rotation immediately?
-- How would you detect accidental secret exposure in logs or manifests?
+- Why is baking secrets into images unsafe even with private registry?
+- Which event should trigger immediate secret rotation?
+- How do you detect accidental secret leak in logs/manifests?
 
 ## Why This Lab Proves Understanding
-- Verify confirms correct separation of concerns and runtime injection model.
-- Cleanup confirms secure teardown of credential artifacts.
+- You validated separation of concerns with live workload evidence.
 
 ## Answer Key
-A lab is considered successful only when every Verify condition is true and cleanup is completed.
-
-Pass criteria (all required):
-- [ ] Pod reads config and secret values from Kubernetes objects.
-- [ ] Config and secret are stored as separate resources.
-- [ ] You can explain why secret rotation should not require image rebuild.
-- [ ] Cleanup commands executed successfully.
-
-Fail criteria (any one means FAIL):
-- Any Verify condition not met.
-- Separation between config and secret is unclear.
-- Environment not in clean state after cleanup.
-
-If failed, record:
-- Exact command that failed.
-- Error output.
-- Root cause and fix applied before rerun.
+Pass when all Verify points are satisfied and cleanup is complete.

@@ -1,25 +1,23 @@
 # Linux Namespaces
 
 ## Context & Problem
-This topic is part of 01-fundamentals and explains an essential concept required for production container operations.
+This topic targets a practical operational failure mode in 01-fundamentals and prepares you to diagnose it with evidence.
 
 ## First Principles
-Container behavior is a combination of Linux primitives, runtime semantics, and explicit configuration choices.
+Understand mechanism first, then command usage. Avoid tool memorization without system reasoning.
 
 ## Production Implementation
-Use this concept with repeatable commands and verification criteria instead of assumptions.
+Apply least privilege, explicit boundaries, and repeatable verification checks.
 
 ## Troubleshooting Approach
-Collect observable evidence first, then map symptoms to the correct layer (image, container, runtime, or host).
+Collect observable evidence first, then decide corrective action.
 
-## Hands-on Lab
-Use [LAB.md](./LAB.md) to practice and verify this concept.
+## Evolution & Alternatives
+Know when this approach is preferred and when an alternative is safer or simpler.
+
+## Next Steps
+Run [LAB.md](./LAB.md), then capture one runbook note from your findings.
 
 ## Zero-Confusion Summary
-- What it is:
-  - Linux Namespaces as a practical container concept.
-- What it is not:
-  - It is not complete in isolation from adjacent topics.
-- If you truly understand this topic, you can explain:
-  - Why this concept exists.
-  - How to verify it in a running environment.
+- Success means you can explain both behavior and failure mode.
+- If you cannot explain output, rerun lab and verify assumptions.

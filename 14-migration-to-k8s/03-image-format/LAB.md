@@ -1,65 +1,41 @@
 # Image Format Lab
 
 ## Goal
-Inspect image metadata and practice digest-based deployment references.
+Prove why digest-based references are safer than tag-only references for migration.
 
 ## Prerequisites
-- Docker installed
-- `skopeo` (optional, useful)
+- Docker installed.
+- Optional: skopeo installed.
 
 ## Steps
-1. Pull a known image:
-   ```bash
-   docker pull nginx:1.27-alpine
-   ```
-2. Inspect image ID and digest locally:
-   ```bash
-   docker image inspect nginx:1.27-alpine --format '{{.Id}} {{index .RepoDigests 0}}'
-   ```
-3. Save a digest-pinned reference from output.
-4. (Optional) Inspect manifest/media type with skopeo:
-   ```bash
-   skopeo inspect docker://docker.io/library/nginx:1.27-alpine | head -n 30
-   ```
-5. Compare operational meaning:
-   - Tag reference: mutable over time
-   - Digest reference: immutable content pointer
+1. Pull a known image.
+   COMMAND: docker pull nginx:1.27-alpine
+2. Capture local digest reference.
+   COMMAND: docker image inspect nginx:1.27-alpine --format '{{.Id}} {{index .RepoDigests 0}}'
+3. Record digest string in notes.
+4. Optional manifest inspection.
+   COMMAND: skopeo inspect docker://docker.io/library/nginx:1.27-alpine 2>/dev/null | head -n 30 || true
+
+## Expected Observations
+- Repo digest is visible and immutable.
+- You can contrast mutable tag behavior vs immutable digest behavior.
+- Manifest metadata is inspectable through tooling.
 
 ## Verify
-- You captured and can explain a valid repo digest for the image.
-- You can state why digest pinning improves reproducibility.
-- Optional `skopeo inspect` confirms manifest metadata visibility.
+- Digest captured successfully.
+- You can explain one rollout risk reduced by digest pinning.
+- You documented one CI gate check for image promotion.
 
 ## Cleanup
-- `docker rmi nginx:1.27-alpine || true`
-
-## Next
-Enforce digest pinning in deployment manifests and policy checks.
+- COMMAND: docker rmi nginx:1.27-alpine 2>/dev/null || true
 
 ## Concept Check
-- Why is a digest a stronger deployment contract than a tag?
-- What real outage class is reduced by digest pinning?
-- Which check should CI enforce before allowing an image promotion?
+- Why can mutable tags cause cross-environment drift?
+- What policy should block promotion when digest evidence is missing?
+- How does digest pinning help rollback confidence?
 
 ## Why This Lab Proves Understanding
-- Verify confirms you can inspect image identity and reason about immutability.
-- Cleanup confirms environment reset discipline.
+- You tied artifact identity directly to rollout safety.
 
 ## Answer Key
-A lab is considered successful only when every Verify condition is true and cleanup is completed.
-
-Pass criteria (all required):
-- [ ] You captured and can explain a valid repo digest for the image.
-- [ ] You can state why digest pinning improves reproducibility.
-- [ ] Optional `skopeo inspect` confirms manifest metadata visibility (if tool installed).
-- [ ] Cleanup commands executed successfully.
-
-Fail criteria (any one means FAIL):
-- Any mandatory Verify condition not met.
-- Digest understanding is unclear or incorrect.
-- Environment not in clean state after cleanup.
-
-If failed, record:
-- Exact command that failed.
-- Error output.
-- Root cause and fix applied before rerun.
+Pass when all Verify points are satisfied and cleanup is complete.

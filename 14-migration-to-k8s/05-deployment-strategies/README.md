@@ -1,31 +1,23 @@
 # Deployment Strategies
 
 ## Context & Problem
-Unsafe rollout patterns amplify migration defects into broad outages.
+This topic targets a practical operational failure mode in 14-migration-to-k8s and prepares you to diagnose it with evidence.
 
 ## First Principles
-Rollout strategy controls blast radius; readiness gates safe traffic movement.
+Understand mechanism first, then command usage. Avoid tool memorization without system reasoning.
 
 ## Production Implementation
-Standardize rolling updates and tested rollback before introducing canary complexity.
+Apply least privilege, explicit boundaries, and repeatable verification checks.
 
 ## Troubleshooting Approach
-Use rollout history/events and readiness failures to diagnose bad releases.
+Collect observable evidence first, then decide corrective action.
+
+## Evolution & Alternatives
+Know when this approach is preferred and when an alternative is safer or simpler.
 
 ## Next Steps
-Run a complete deploy-update-rollback cycle in this lab.
-
-## Hands-on Lab
-Use [LAB.md](./LAB.md) to practice and verify this concept.
+Run [LAB.md](./LAB.md), then capture one runbook note from your findings.
 
 ## Zero-Confusion Summary
-- What it is:
-  - Deployment Strategies as a Kubernetes migration control area.
-- What it is not:
-  - It is not a standalone migration strategy.
-- When to use:
-  - Use it when this layer becomes a migration blocker or risk.
-- If you truly understand this topic, you can explain:
-  - The problem it solves.
-  - The mechanism involved.
-  - One failure mode and fix path.
+- Success means you can explain both behavior and failure mode.
+- If you cannot explain output, rerun lab and verify assumptions.

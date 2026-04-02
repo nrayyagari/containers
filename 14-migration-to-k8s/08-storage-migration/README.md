@@ -1,31 +1,23 @@
 # Storage Migration
 
 ## Context & Problem
-Ephemeral container layers cause data loss when workloads move/restart unless durable storage is explicit.
+This topic targets a practical operational failure mode in 14-migration-to-k8s and prepares you to diagnose it with evidence.
 
 ## First Principles
-PVC/PV abstractions provide durable lifecycle decoupled from individual pods.
+Understand mechanism first, then command usage. Avoid tool memorization without system reasoning.
 
 ## Production Implementation
-Classify stateful workloads and map to storage class + backup/restore SLOs.
+Apply least privilege, explicit boundaries, and repeatable verification checks.
 
 ## Troubleshooting Approach
-For data loss, verify bind state, mount path, and reclaim behavior.
+Collect observable evidence first, then decide corrective action.
+
+## Evolution & Alternatives
+Know when this approach is preferred and when an alternative is safer or simpler.
 
 ## Next Steps
-Use this lab to prove persistence across pod recreation.
-
-## Hands-on Lab
-Use [LAB.md](./LAB.md) to practice and verify this concept.
+Run [LAB.md](./LAB.md), then capture one runbook note from your findings.
 
 ## Zero-Confusion Summary
-- What it is:
-  - Storage Migration as a Kubernetes migration control area.
-- What it is not:
-  - It is not a standalone migration strategy.
-- When to use:
-  - Use it when this layer becomes a migration blocker or risk.
-- If you truly understand this topic, you can explain:
-  - The problem it solves.
-  - The mechanism involved.
-  - One failure mode and fix path.
+- Success means you can explain both behavior and failure mode.
+- If you cannot explain output, rerun lab and verify assumptions.

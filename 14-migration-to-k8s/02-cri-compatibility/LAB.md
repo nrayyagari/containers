@@ -1,68 +1,42 @@
-# CRI Compatibility Lab
+# Cri Compatibility Lab
 
 ## Goal
-Validate that kubelet and `crictl` point to a working CRI runtime endpoint.
+Validate that CRI endpoint configuration is correct for node runtime communication.
 
 ## Prerequisites
-- Linux host with containerd and `crictl`
-- Access to kubelet config/logs (recommended)
+- Linux host with kubelet and containerd.
+- crictl installed.
 
 ## Steps
-1. Check `crictl` endpoint config:
-   ```bash
-   sudo cat /etc/crictl.yaml || true
-   ```
-2. Query runtime info:
-   ```bash
-   sudo crictl info
-   ```
-3. List pods and containers from runtime:
-   ```bash
-   sudo crictl pods
-   sudo crictl ps -a
-   ```
-4. Verify kubelet runtime endpoint setting:
-   ```bash
-   ps -ef | grep kubelet | grep -E 'container-runtime-endpoint|cri' || true
-   ```
-5. Correlate with kubelet logs for CRI errors:
-   ```bash
-   sudo journalctl -u kubelet --no-pager | grep -Ei 'runtime|cri|containerd|socket' | tail -n 30
-   ```
+1. Inspect crictl endpoint config.
+   COMMAND: cat /etc/crictl.yaml 2>/dev/null || echo "crictl config missing"
+2. Check runtime connectivity.
+   COMMAND: crictl info || true
+3. Inspect kubelet runtime endpoint arguments.
+   COMMAND: ps -ef | grep kubelet | grep -E 'container-runtime-endpoint|cri' || true
+4. Scan kubelet logs for CRI errors.
+   COMMAND: journalctl -u kubelet --no-pager | grep -Ei 'runtime|cri|socket|containerd' | tail -n 30
+
+## Expected Observations
+- You can identify configured runtime endpoint socket.
+- crictl info succeeds or returns actionable endpoint error.
+- kubelet logs reveal if endpoint mismatch exists.
 
 ## Verify
-- `crictl info` succeeds without endpoint errors.
-- Runtime endpoint used by kubelet matches expected socket.
-- No unresolved CRI socket/version errors in recent kubelet logs.
+- Runtime endpoint path is explicitly identified.
+- crictl and kubelet endpoint settings are consistent.
+- No unresolved CRI socket errors remain after validation.
 
 ## Cleanup
-- No cleanup needed.
-
-## Next
-Bake CRI endpoint validation into node bootstrap checks.
+- No cleanup required.
 
 ## Concept Check
-- Which two signals confirm CRI endpoint health beyond "service is running"?
-- Why must kubelet and `crictl` target the same socket during incident debugging?
-- What happens to pod scheduling if CRI connectivity degrades intermittently?
+- What exact mismatch causes node NotReady during runtime migration?
+- Why must crictl and kubelet target the same endpoint when debugging?
+- Which log signal confirms endpoint recovery?
 
 ## Why This Lab Proves Understanding
-- Verify checks endpoint correctness and observable kubelet/runtime alignment.
-- No-cleanup lab still requires evidence capture for operational rigor.
+- You validated endpoint correctness with both config and runtime evidence.
 
 ## Answer Key
-A lab is considered successful only when every Verify condition is true.
-
-Pass criteria (all required):
-- [ ] `crictl info` succeeds without endpoint errors.
-- [ ] Runtime endpoint used by kubelet matches expected socket.
-- [ ] No unresolved CRI socket/version errors in recent kubelet logs.
-
-Fail criteria (any one means FAIL):
-- Any Verify condition not met.
-- CRI communication errors remain unresolved.
-
-If failed, record:
-- Exact command that failed.
-- Error output.
-- Root cause and fix applied before rerun.
+Pass when all Verify points are satisfied.

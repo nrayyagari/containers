@@ -1,58 +1,41 @@
 # Service Mesh Lab
 
 ## Goal
-Build practical intuition for service-mesh value and cost using a focused test scenario.
+Assess when service mesh adds value and when it adds unnecessary complexity.
 
 ## Prerequisites
-- `kubectl` connected to test cluster
-- Optional: Istio or Linkerd test environment
+- kubectl access to test cluster.
+- Optional mesh installation (Istio or Linkerd) for live validation.
 
 ## Steps
-1. Pick one service-to-service flow in your app (A -> B).
+1. Select one service-to-service flow (A to B).
 2. Document current controls without mesh:
-   - Encryption status
-   - Retry/timeouts location
-   - Authorization enforcement point
-3. (If mesh available) enable namespace injection and deploy sample app.
-4. Apply one traffic policy (for example retry or timeout) and one security policy (for example mTLS strict mode).
-5. Observe behavior before/after policy with simple request tests and pod logs.
+   - transport encryption
+   - retries/timeouts
+   - authorization policy location
+3. If mesh is available, apply one traffic policy and one security policy to this flow.
+4. Measure before/after behavior and record operational overhead.
+
+## Expected Observations
+- You identify at least one control simplified by mesh.
+- You identify at least one operational overhead introduced by mesh.
+- If tooling exists, policy effect is observable in logs/requests.
 
 ## Verify
-- You can describe one control that became easier with mesh.
-- You can describe one operational overhead mesh introduces.
-- If tooling is available, policy effect is observable in request behavior or logs.
+- Benefit and cost are both documented with concrete evidence.
+- You defined one criterion for adopting mesh and one for deferring it.
+- You mapped one failure mode to mesh-vs-app diagnostic path.
 
 ## Cleanup
-- Remove sample resources and disable injection in test namespace.
-- Confirm test namespace is back to baseline.
-
-## Next
-Adopt mesh first in high-value, high-risk service boundaries.
+- Remove test mesh resources and disable test injection settings.
 
 ## Concept Check
-- What problem does mesh solve better than app-library-only approaches?
-- When does mesh complexity exceed its benefit?
-- Which metric should decide if mesh rollout is helping or hurting?
+- Which problem does mesh solve better than app-library-only approach?
+- When does mesh complexity exceed value?
+- Which KPI should decide rollout continuation?
 
 ## Why This Lab Proves Understanding
-- Verify forces balanced evaluation of both capability gain and operational cost.
-- Cleanup confirms controlled experimentation practice.
+- You performed balanced trade-off analysis, not one-sided adoption.
 
 ## Answer Key
-A lab is considered successful only when every Verify condition is true and cleanup is completed.
-
-Pass criteria (all required):
-- [ ] You can describe one control that became easier with mesh.
-- [ ] You can describe one operational overhead mesh introduces.
-- [ ] If tooling is available, policy effect is observable in request behavior or logs.
-- [ ] Cleanup commands executed successfully.
-
-Fail criteria (any one means FAIL):
-- Any Verify condition not met.
-- Trade-off analysis is superficial or incorrect.
-- Environment not in clean state after cleanup.
-
-If failed, record:
-- Exact command that failed.
-- Error output.
-- Root cause and fix applied before rerun.
+Pass when all Verify points are satisfied and cleanup is complete.

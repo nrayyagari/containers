@@ -1,47 +1,52 @@
 # Linux Namespaces Lab
 
 ## Goal
-Practice and verify the core behavior of Linux Namespaces.
+Develop hands-on confidence for Linux Namespaces and prove understanding through observable output.
 
 ## Prerequisites
-- Linux host with Docker
-- Permission to run containers
+- Non-production test environment with required tools.
+- Permission to run commands for this module.
 
 ## Steps
-1. Start a reference container: `docker run -d --name fnd-lab alpine:3.20 sleep 300`
-2. Compare host/container process view: `ps -ef | head` and `docker exec fnd-lab ps -ef`
-3. Inspect namespace/cgroup hints: `docker inspect fnd-lab --format "{{.State.Pid}}"`
-4. Inspect process status inside container: `docker exec fnd-lab cat /proc/1/status | sed -n "1,30p"`
-5. Write down what is isolated and what is shared.
+1. Start container for namespace inspection.
+   COMMAND: docker run -d --name ns-lab alpine:3.20 sleep 300
+2. Compare process views.
+   COMMAND: ps -ef | head -n 10
+   COMMAND: docker exec ns-lab ps -ef
+3. Compare namespace links from host PID.
+   COMMAND: pid=$(docker inspect -f '{{.State.Pid}}' ns-lab); ls -l /proc/$pid/ns
+
+## Expected Observations
+- Command output contains concrete evidence for this topic.
+- You can point to at least one line that proves the control/mechanism.
+- You can relate the output to one production risk.
 
 ## Verify
-- The lab commands execute successfully for this topic.
-- You can explain one concrete behavior observed in output.
-- You can describe one production risk if this concept is misused.
+- All steps executed without unresolved errors.
+- You can explain observed behavior from first principles.
+- You identified one failure mode and first diagnostic action.
 
 ## Cleanup
-- Remove lab container/images/resources created in this lab.
-- Confirm no leftover temporary resources remain.
+- Remove containers: docker rm -f fnd-lab ns-lab cg-lab sec-lab 2>/dev/null || true
 
 ## Concept Check
-- Which command output in this lab is your strongest proof of understanding?
-- Which failure mode appears when this concept is misunderstood?
-- What should be the first diagnostic check in a real incident?
+- Which output line is your strongest proof for this topic?
+- What breaks in production if this concept is misunderstood?
+- What are your first two diagnostic commands during incident response?
 
 ## Why This Lab Proves Understanding
-- Verify checks observable behavior, not only command memorization.
-- Cleanup confirms operational discipline and repeatability.
+- It validates execution, interpretation, and operational cleanup.
 
 ## Answer Key
-A lab is considered successful only when every Verify condition is true and cleanup is completed.
+A lab is successful only when every Verify condition is true and cleanup is complete.
 
 Pass criteria (all required):
-- [ ] The lab commands execute successfully for this topic.
-- [ ] You can explain one concrete behavior observed in output.
-- [ ] You can describe one production risk if this concept is misused.
-- [ ] Cleanup commands executed successfully.
+- [ ] Steps completed and expected observations captured.
+- [ ] Behavior explanation is accurate and mechanism-based.
+- [ ] Failure mode and first diagnostic action documented.
+- [ ] Cleanup completed with no leftover lab artifacts.
 
 Fail criteria (any one means FAIL):
 - Any Verify condition not met.
-- Output differs materially from expected behavior.
-- Environment not in clean state after cleanup.
+- Output interpretation is unclear or incorrect.
+- Environment is not clean after cleanup.

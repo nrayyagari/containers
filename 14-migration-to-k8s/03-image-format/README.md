@@ -1,31 +1,23 @@
 # Image Format
 
 ## Context & Problem
-Mutable tags and unclear manifest metadata create drift between environments.
+This topic targets a practical operational failure mode in 14-migration-to-k8s and prepares you to diagnose it with evidence.
 
 ## First Principles
-OCI manifests/layers standardize artifact identity across registries/runtimes.
+Understand mechanism first, then command usage. Avoid tool memorization without system reasoning.
 
 ## Production Implementation
-Use digest pinning and manifest checks in CI promotion gates.
+Apply least privilege, explicit boundaries, and repeatable verification checks.
 
 ## Troubleshooting Approach
-For pull/runtime mismatch, inspect digest, manifest, and architecture first.
+Collect observable evidence first, then decide corrective action.
+
+## Evolution & Alternatives
+Know when this approach is preferred and when an alternative is safer or simpler.
 
 ## Next Steps
-Practice digest-focused workflows before production rollout.
-
-## Hands-on Lab
-Use [LAB.md](./LAB.md) to practice and verify this concept.
+Run [LAB.md](./LAB.md), then capture one runbook note from your findings.
 
 ## Zero-Confusion Summary
-- What it is:
-  - Image Format as a Kubernetes migration control area.
-- What it is not:
-  - It is not a standalone migration strategy.
-- When to use:
-  - Use it when this layer becomes a migration blocker or risk.
-- If you truly understand this topic, you can explain:
-  - The problem it solves.
-  - The mechanism involved.
-  - One failure mode and fix path.
+- Success means you can explain both behavior and failure mode.
+- If you cannot explain output, rerun lab and verify assumptions.
