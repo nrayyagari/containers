@@ -1,28 +1,24 @@
 # Firecracker MicroVMs
 
-## Context & Problem
-This topic explains how microVMs bridge the gap between containers and traditional virtual machines. In production, this matters because advanced features usually solve a real boundary problem while introducing new operational cost.
+## What It Is
+Firecracker MicroVMs covers How microVMs bridge the gap between containers and VMs.
 
-## First Principles
-- Advanced features are usually trade-offs, not universal upgrades.
-- Stronger isolation, different filesystems, and rootless operation all change what the host must provide.
-- If you cannot name the operational cost, you are not ready to adopt the feature.
+## Why It Matters
+It matters because advanced features solve real problems but add real operational cost.
 
-## Production Implementation
-Adopt the advanced feature only after you can state the requirement it solves and the host assumptions it introduces. Advanced settings pay for themselves only when the default path is measurably inadequate.
+## Key Points
+- Advanced features are trade-offs, not automatic upgrades.
+- Most of them change host assumptions around privilege, filesystem, or runtime support.
+- Use them only when the default path is clearly insufficient.
 
-## Troubleshooting Approach
-Advanced features fail at host boundaries first. Verify kernel support, filesystem compatibility, UID or GID mapping, runtime-handler configuration, and boot or virtualization prerequisites before debugging the application.
+## Practice Check
+- List the host prerequisites before trying the feature.
+- Name one clear benefit and one clear cost before adopting it.
 
-## Evolution & Alternatives
-These topics reflect the industry's attempt to get better isolation, better portability, or better density without giving up too much convenience. Every option improves one boundary by making another boundary more complex.
+## Common Mistakes
+- Changing several things before you know which boundary is failing.
+- Finishing the exercise without being able to explain the proof signal.
 
-## Practical Focus
-There is no dedicated lab file for this topic, so practice it explicitly on a disposable system instead of reading passively.
-- List the host prerequisites before you enable the feature so you can separate missing support from workload bugs.
-- Compare the feature with the default path on isolation, portability, and operational complexity.
-- Prove one concrete benefit and one new operational cost before deciding the feature is worth it.
-
-## Next Steps
-Practice the topic with real evidence before moving on. Reading without proving the behavior is not enough here.
-After that, continue to [Unix Domain Sockets](../10-uds-uds/README.md).
+## Next
+Prove the behavior in a disposable environment before moving on.
+Then continue to [Unix Domain Sockets](../10-uds-uds/README.md).

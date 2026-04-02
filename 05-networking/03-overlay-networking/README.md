@@ -1,28 +1,24 @@
 # Overlay Networking
 
-## Context & Problem
-This topic explains how overlay networks span hosts and carry container traffic through encapsulation. In production, this matters because most container network incidents are really packet-path or name-resolution problems hidden by abstraction.
+## What It Is
+Overlay Networking covers How overlay networks carry container traffic across hosts.
 
-## First Principles
-- Container storage has multiple lifecycles: image layers, writable layers, volumes, and external storage backends.
-- Copy-on-write and overlay behavior can change both performance and the meaning of a write operation.
-- Durability depends on where data lives, not on whether the application wrote it successfully once.
+## Why It Matters
+It matters because most container network incidents are path problems hidden by abstraction.
 
-## Production Implementation
-Draw the traffic path before changing any configuration. In practice that means checking namespace layout, interface attachment, routes, name resolution, and NAT or policy translation one hop at a time.
+## Key Points
+- Image layers, writable layers, and persistent volumes have different lifecycles.
+- Copy-on-write behavior affects both performance and troubleshooting.
+- Durability depends on where data is stored, not on whether the write succeeded once.
 
-## Troubleshooting Approach
-Start by proving where the path breaks: name resolution, route selection, listener binding, translation, or policy. Packet capture or explicit socket inspection is often the fastest way to stop guessing.
+## Practice Check
+- Draw the traffic path before changing anything.
+- Use `ip`, `ss`, `docker network inspect`, or packet capture to prove where the path breaks.
 
-## Evolution & Alternatives
-Network abstractions evolved from one-host bridges to multi-host overlays and service meshes. The abstractions changed mainly to address scale, mobility, and policy, not to replace basic packet mechanics.
+## Common Mistakes
+- Changing app config before proving the packet path.
+- Treating DNS, routing, and firewall behavior as one problem.
 
-## Practical Focus
-There is no dedicated lab file for this topic, so practice it explicitly on a disposable system instead of reading passively.
-- Inspect topology first with `docker network inspect`, `ip addr`, `ip route`, or the equivalent host tools.
-- Use `ss`, `curl`, or packet capture to prove whether the listener, path, and response all match your expectation.
-- Change one network variable at a time and validate where the packet path changed.
-
-## Next Steps
-Practice the topic with real evidence before moving on. Reading without proving the behavior is not enough here.
-After that, continue to [Macvlan Ipvlan](../04-macvlan-ipvlan/README.md).
+## Next
+Prove the behavior in a disposable environment before moving on.
+Then continue to [Macvlan Ipvlan](../04-macvlan-ipvlan/README.md).

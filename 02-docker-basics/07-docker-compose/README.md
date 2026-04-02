@@ -1,40 +1,30 @@
 # Docker Compose
 
-## Context & Problem
-This topic explains how Compose describes and runs multi-container applications. In production, this matters because object-lifecycle mistakes quickly turn into accidental data loss, stale state, or misleading triage.
+## What It Is
+Docker Compose describes a multi-container application in one file and brings the services up together. It is an application-topology tool, not just a shortcut for several `docker run` commands.
 
-## First Principles
-- Docker operations make sense only when you keep images, containers, volumes, networks, and daemon state separate in your head.
-- Some Docker commands create objects, some mutate them, and some only reveal existing state; confusing those roles creates most day-2 mistakes.
-- The safest Docker workflow is inspection first, change second, cleanup last.
+## Why It Matters
+It reduces setup drift, but it also hides object creation unless you keep the service, network, and volume model clear.
 
-## Production Implementation
-Map the command you run to the object it mutates: image, container, volume, network, or daemon state. Safe Docker operation comes from understanding which state is replaceable and which state must be preserved.
+## Key Points
+- Compose describes an application, not just a list of commands.
+- Services, networks, and volumes created by Compose have their own lifecycle.
+- Startup order is not the same thing as readiness.
 
-## Troubleshooting Approach
-Start with direct evidence at the layer this topic controls, then expand outward only if the observed state matches expectations.
+## Lab Focus
+Use the lab to prove how Compose describes and runs multi-container applications.
+- Key commands:
+  - `docker network create net-lab`
+  - `docker run -d --name net-a --network net-lab alpine:3.20 sleep 300`
+  - `docker run -d --name net-b --network net-lab alpine:3.20 sleep 300`
+- Finish only when:
+  - All steps executed without unresolved errors.
+  - You can explain observed behavior from first principles.
 
-## Evolution & Alternatives
-Compose evolved from a versioned file format into the Compose Specification implemented by modern Compose v2 tooling. The important lesson is that the file describes application topology, not just a shortcut for running several `docker run` commands.
+## Common Mistakes
+- Assuming Compose startup order guarantees readiness.
+- Forgetting that Compose also creates networks and volumes with their own lifecycle.
 
-## Lab Tie-In
-Use the lab to prove the mechanism, not just to finish a list of commands. Before you begin, decide which output line or state change will prove the concept above is real.
-
-### Commands You Will See
-- `docker network create net-lab`
-- `docker run -d --name net-a --network net-lab alpine:3.20 sleep 300`
-- `docker run -d --name net-b --network net-lab alpine:3.20 sleep 300`
-- `docker exec net-a ping -c1 net-b`
-
-### What Success Looks Like
-- All steps executed without unresolved errors.
-- You can explain observed behavior from first principles.
-- You identified one failure mode and first diagnostic action.
-
-### Questions To Answer After The Lab
-- Which Compose behavior in this topic improves repeatability most?
-- What failure mode appears when service dependencies are implicit?
-
-## Next Steps
-Run [LAB.md](./LAB.md) and do not mark it complete until you can explain both the mechanism and the failure mode.
-After that, continue to [Docker Daemon](../08-docker-daemon/README.md).
+## Next
+Read the lab after this README and use the output as proof, not as a checklist.
+Then continue to [Docker Daemon](../08-docker-daemon/README.md).

@@ -1,42 +1,29 @@
 # Image Building
 
-## Context & Problem
-Image problems are supply-chain problems. A careless build can produce oversized images, hidden secrets, slow deployments, inconsistent environments, or artifacts you cannot explain during an incident.
+## What This Module Covers
+This module turns image building into an engineering problem instead of a packaging afterthought. It covers Dockerfiles, layer behavior, base-image choice, tagging, secrets, and registry interaction.
 
-## First Principles
-An image is an immutable artifact built in layers. Instruction order, build context, base-image choice, metadata, and cache behavior all shape the artifact that eventually lands in production.
-
-## Production Implementation
-Treat image creation as an engineering discipline, not a packaging afterthought. Make inputs explicit, keep layers intentional, and inspect what actually shipped before trusting a tag in CI/CD.
-
-## Troubleshooting Approach
-When an image behaves unexpectedly, inspect its Dockerfile, history, build arguments, and registry metadata before blaming runtime or orchestration. Many runtime surprises are baked into the image itself.
-
-## Evolution & Alternatives
-BuildKit, multi-stage builds, and better registry workflows changed image creation from a monolithic Dockerfile exercise into a reproducible build pipeline. The core idea stayed the same: build the smallest trustworthy artifact you can explain.
-
-## How To Use This Module
-1. Read the topic README before touching the commands or the runtime.
-2. Write down the boundary each topic controls and one failure mode that boundary can create.
-3. If a lab exists, finish it only when you can explain the output from first principles and identify the first diagnostic action you would take in production.
+## How To Study It
+1. Read the topic README first.
+2. Write one sentence for what the topic is and one sentence for what can fail.
+3. If a lab exists, do not move on until you can explain the proof signal.
 
 ## Topic Map
 - [01-dockerfile-basics](./01-dockerfile-basics/README.md) | [Lab](./01-dockerfile-basics/LAB.md): how Dockerfile order and defaults shape the final image.
-- [02-instructions](./02-instructions/README.md) | [Lab](./02-instructions/LAB.md): what common Dockerfile instructions really do at build time and at run time.
-- [03-multi-stage-builds](./03-multi-stage-builds/README.md) | [Lab](./03-multi-stage-builds/LAB.md): how separate build and runtime stages shrink images and remove toolchains.
-- [04-layer-caching](./04-layer-caching/README.md) | [Lab](./04-layer-caching/LAB.md): how layer cache hits and misses affect build speed and reproducibility.
-- [05-base-images](./05-base-images/README.md) | [Lab](./05-base-images/LAB.md): how the first FROM determines compatibility, attack surface, size, and debugging options.
-- [06-best-practices](./06-best-practices/README.md) | [Lab](./06-best-practices/LAB.md): how to build images that are small, reproducible, secure, and maintainable.
-- [07-registries](./07-registries/README.md) | [Lab](./07-registries/LAB.md): how builders and runtimes interact with registries during push and pull.
-- [08-tags](./08-tags/README.md) | [Lab](./08-tags/LAB.md): how image tags affect versioning, traceability, and rollback safety.
-- [09-build-arguments](./09-build-arguments/README.md) | [Lab](./09-build-arguments/LAB.md): how ARG values influence builds without becoming container environment variables.
-- [10-build-secrets](./10-build-secrets/README.md) | [Lab](./10-build-secrets/LAB.md): how BuildKit passes sensitive material without baking it into image layers.
+- [02-instructions](./02-instructions/README.md) | [Lab](./02-instructions/LAB.md): what common Dockerfile instructions do at build time and run time.
+- [03-multi-stage-builds](./03-multi-stage-builds/README.md) | [Lab](./03-multi-stage-builds/LAB.md): how to split build and runtime stages to reduce size and risk.
+- [04-layer-caching](./04-layer-caching/README.md) | [Lab](./04-layer-caching/LAB.md): how cache hits and misses affect build speed and reproducibility.
+- [05-base-images](./05-base-images/README.md) | [Lab](./05-base-images/LAB.md): how base image choice changes size, compatibility, and attack surface.
+- [06-best-practices](./06-best-practices/README.md) | [Lab](./06-best-practices/LAB.md): how to build images that are small, reproducible, and maintainable.
+- [07-registries](./07-registries/README.md) | [Lab](./07-registries/LAB.md): how builds and runtimes interact with image registries.
+- [08-tags](./08-tags/README.md) | [Lab](./08-tags/LAB.md): how tag strategy affects traceability and rollback safety.
+- [09-build-arguments](./09-build-arguments/README.md) | [Lab](./09-build-arguments/LAB.md): how ARG values affect a build without becoming runtime environment variables.
+- [10-build-secrets](./10-build-secrets/README.md) | [Lab](./10-build-secrets/LAB.md): how BuildKit passes sensitive material without baking it into layers.
 
-## Completion Standard
-- You can explain the mechanism in plain language without hiding behind tool names.
-- You can point to the signal that proves the mechanism is working or failing.
-- You know which first diagnostic step is justified when this topic breaks in production.
+## Move On When
+- You can meet this module's main goal: Be able to explain exactly what is in an image and why.
+- You can name the first signal you would check during an incident in this area.
+- You no longer need the topic names to explain the mechanism.
 
-## Next Steps
-After this module, move to Container Runtimes so you can follow the artifact from build output to actual process execution.
-Continue with [Container Runtimes](../04-container-runtimes/README.md) when the topic map in this module feels operationally clear.
+## Next
+Continue with [Container Runtimes](../04-container-runtimes/README.md).

@@ -1,28 +1,24 @@
 # Multi Stage Builds
 
-## Context & Problem
-This topic explains how multi-stage builds turn a best practice into a repeatable delivery pattern. In production, this matters because small shortcuts here create recurring reliability, security, and rollout problems later.
+## What It Is
+Multi Stage Builds covers How multi-stage builds support clean runtime images.
 
-## First Principles
-- Image creation is additive: each build step leaves history, metadata, or filesystem state behind.
-- Build-time decisions influence security, startup speed, cache reuse, and rollback safety after the image is published.
-- Treat the image as a supply-chain artifact, not just a convenient tarball of files.
+## Why It Matters
+It matters because small shortcuts here become recurring reliability and security problems later.
 
-## Production Implementation
-The point of a best practice is to reduce ambiguity, blast radius, or recovery cost. Apply the pattern only if you can name which of those it improves for your workload.
+## Key Points
+- Every build step leaves filesystem or metadata history behind.
+- Instruction order affects size, cache reuse, and traceability.
+- Treat the image as a supply-chain artifact, not as a zip file with a tag.
 
-## Troubleshooting Approach
-When builds or deployments behave unexpectedly, inspect the artifact and its metadata first. The runtime can only execute what the build and registry path actually delivered.
+## Practice Check
+- Apply the practice to one real image or service instead of a hypothetical one.
+- Write down the operational benefit you expect and how you would verify it.
 
-## Evolution & Alternatives
-Best practices keep changing in detail as tooling improves, but they almost always move in the same direction: fewer surprises, less privilege, stronger provenance, and faster recovery.
+## Common Mistakes
+- Trusting the tag without checking the actual artifact or digest.
+- Blaming runtime behavior that was baked into the image earlier.
 
-## Practical Focus
-There is no dedicated lab file for this topic, so practice it explicitly on a disposable system instead of reading passively.
-- Inspect the artifact, not just the Dockerfile: use `docker history`, `docker inspect`, or registry metadata to prove what shipped.
-- Practice rebuilding after one small change so you can observe cache behavior and the resulting metadata difference.
-- Treat tags as references and verify the immutable digest whenever traceability matters.
-
-## Next Steps
-Practice the topic with real evidence before moving on. Reading without proving the behavior is not enough here.
-After that, continue to [Healthchecks](../05-healthchecks/README.md).
+## Next
+Prove the behavior in a disposable environment before moving on.
+Then continue to [Healthchecks](../05-healthchecks/README.md).

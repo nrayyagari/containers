@@ -1,28 +1,24 @@
 # Scheduling
 
-## Context & Problem
-This topic explains how the platform decides where a workload should run. In production, this matters because once workloads become scheduled and replicated, host-centric mental models stop working.
+## What It Is
+Scheduling covers How the platform decides where a workload should run.
 
-## First Principles
-- Orchestration is a control-loop problem, not a one-host execution problem.
-- Desired state, observed state, and controller actions must stay aligned for the system to feel reliable.
-- Once replicas move between nodes, service identity matters more than host identity.
+## Why It Matters
+It matters because single-host thinking breaks once replicas move and controllers own state.
 
-## Production Implementation
-Think in controller terms, not in single-container terms. What matters is which object owns the desired state, which signal it reacts to, and how a change propagates across replicas.
+## Key Points
+- Orchestration is about desired state and control loops.
+- Service identity matters more than host identity once workloads move.
+- Health, scaling, rollout, and scheduling are connected, not separate concerns.
 
-## Troubleshooting Approach
-Ask which controller owns the behavior you are observing and what signal it reacted to. Problems that look random from one Pod often look obvious from the controller's point of view.
+## Practice Check
+- Pick one workload and state the controller, desired state, and health signal.
+- Predict what the platform should do during failure or rollout, then verify it.
 
-## Evolution & Alternatives
-The shift from imperative operations to declarative reconciliation changed how teams think about reliability. You no longer keep one process alive by hand; you define the desired state and let controllers keep returning to it.
+## Common Mistakes
+- Changing several things before you know which boundary is failing.
+- Finishing the exercise without being able to explain the proof signal.
 
-## Practical Focus
-There is no dedicated lab file for this topic, so practice it explicitly on a disposable system instead of reading passively.
-- Pick one workload and describe its desired state, the controller that owns it, and the signals that controller reacts to.
-- Practice predicting what should happen during a scale event, health failure, or rollout before looking at the platform output.
-- Validate the prediction by checking object state and then explaining which control loop caused it.
-
-## Next Steps
-Practice the topic with real evidence before moving on. Reading without proving the behavior is not enough here.
-After that, continue to [Reconciliation](../10-reconciliation/README.md).
+## Next
+Prove the behavior in a disposable environment before moving on.
+Then continue to [Reconciliation](../10-reconciliation/README.md).

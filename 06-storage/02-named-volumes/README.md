@@ -1,29 +1,24 @@
 # Named Volumes
 
-## Context & Problem
-This topic explains how Docker-managed volumes persist data independent of containers. In production, this matters because state problems are expensive to recover from and often only show up after restarts, migrations, or outages.
-Persistent data should not be confused with the container writable layer. Those are different lifecycles with different failure modes.
+## What It Is
+Named Volumes covers How Docker-managed volumes persist data independently of containers.
 
-## First Principles
-- Container storage has multiple lifecycles: image layers, writable layers, volumes, and external storage backends.
-- Copy-on-write and overlay behavior can change both performance and the meaning of a write operation.
-- Durability depends on where data lives, not on whether the application wrote it successfully once.
+## Why It Matters
+It matters because state bugs usually surface late and are expensive to recover from.
 
-## Production Implementation
-Choose the storage mechanism based on data ownership and recovery requirements, not on which mount syntax is easiest to remember. Practice proving where the data really lives before you trust a backup or cleanup step.
+## Key Points
+- Image layers, writable layers, and persistent volumes have different lifecycles.
+- Copy-on-write behavior affects both performance and troubleshooting.
+- Durability depends on where data is stored, not on whether the write succeeded once.
 
-## Troubleshooting Approach
-Ask three questions early: where does the data live, who owns it, and what path exposes it to the process? That separates permission problems from backend problems and durability problems from simple path mistakes.
+## Practice Check
+- Write a small file, restart the container, and confirm whether the data survived for the reason you expected.
+- Use `docker inspect`, `mount`, `df`, or `df -i` to prove what backend is actually in use.
 
-## Evolution & Alternatives
-Container storage practices matured as teams learned that writable layers are not a data strategy. Durable systems moved toward explicit volume ownership, backend choice, and recovery planning.
+## Common Mistakes
+- Mixing up image content, writable-layer content, and durable data.
+- Testing writes without proving what survives a restart.
 
-## Practical Focus
-There is no dedicated lab file for this topic, so practice it explicitly on a disposable system instead of reading passively.
-- Identify which path is image content, writable-layer content, and durable content before you test anything.
-- Use `docker inspect`, `mount`, `df`, or `df -i` to prove what backend and capacity the workload is actually using.
-- Practice a small write-and-restart cycle so you can prove which data survives and why.
-
-## Next Steps
-Practice the topic with real evidence before moving on. Reading without proving the behavior is not enough here.
-After that, continue to [Tmpfs Mounts](../03-tmpfs-mounts/README.md).
+## Next
+Prove the behavior in a disposable environment before moving on.
+Then continue to [Tmpfs Mounts](../03-tmpfs-mounts/README.md).

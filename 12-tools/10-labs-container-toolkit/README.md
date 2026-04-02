@@ -1,28 +1,24 @@
 # Labs Container Toolkit
 
-## Context & Problem
-This topic explains how a practical toolkit ties the repo tools together for daily engineering work. In production, this matters because tool choice determines which layer you can actually observe and which assumptions remain hidden.
+## What It Is
+Labs Container Toolkit covers How a practical toolkit ties these repo tools together.
 
-## First Principles
-- Each tool exists because a different layer needs to be built, inspected, or debugged.
-- A familiar-looking CLI does not guarantee the same backend, the same state model, or the same safe assumptions.
-- Tool fluency matters only when it is tied to a clear mental model of the layer underneath.
+## Why It Matters
+It matters because tool choice decides which layer you can actually observe.
 
-## Production Implementation
-Use the tool because its backend matches the system layer you care about, not because its UX is familiar. Good operators choose tools the same way they choose APIs: by authority and scope.
+## Key Points
+- Tool choice should follow backend authority, not habit.
+- A Docker-like CLI does not mean Docker semantics underneath.
+- Good operators know what layer a tool exposes and what it hides.
 
-## Troubleshooting Approach
-If a tool shows surprising results, verify what backend it is querying and whether that backend owns the objects you care about. A wrong-but-confident tool is more dangerous than an unavailable one.
+## Practice Check
+- State which backend the tool talks to before you run it.
+- Compare the tool output with one lower-level source so you see what it abstracts.
 
-## Evolution & Alternatives
-The ecosystem diversified as build, runtime, registry, and Kubernetes concerns separated. Tool sprawl is the price of specialization, so clarity about scope matters more than CLI memorization.
+## Common Mistakes
+- Changing several things before you know which boundary is failing.
+- Finishing the exercise without being able to explain the proof signal.
 
-## Practical Focus
-There is no dedicated lab file for this topic, so practice it explicitly on a disposable system instead of reading passively.
-- Run the tool only after you can say which backend it is querying and why that backend is authoritative for the question you have.
-- Compare the tool output with one lower-level source so you can see what abstraction it adds or hides.
-- Write down one situation where this tool is the right choice and one where it would mislead you.
-
-## Next Steps
-Practice the topic with real evidence before moving on. Reading without proving the behavior is not enough here.
-After that, continue to [Advanced](../../13-advanced/README.md).
+## Next
+Prove the behavior in a disposable environment before moving on.
+Then continue to [Advanced](../../13-advanced/README.md).

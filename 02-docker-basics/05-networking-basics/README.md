@@ -1,40 +1,30 @@
 # Networking Basics
 
-## Context & Problem
-This topic explains how Docker connects containers using bridge, host, none, and user-defined networks. In production, this matters because object-lifecycle mistakes quickly turn into accidental data loss, stale state, or misleading triage.
+## What It Is
+Networking Basics covers How Docker connects containers with built-in network modes.
 
-## First Principles
-- Container networking is still Linux networking: interfaces, routes, sockets, bridges, NAT, and packet filters.
-- Name resolution, traffic forwarding, and policy enforcement are different hops in the path and can fail independently.
-- You do not really understand a network issue until you can describe where the packet should go next.
+## Why It Matters
+It matters because most day-to-day Docker mistakes are object-lifecycle mistakes.
 
-## Production Implementation
-Map the command you run to the object it mutates: image, container, volume, network, or daemon state. Safe Docker operation comes from understanding which state is replaceable and which state must be preserved.
+## Key Points
+- Container networking is still interfaces, routes, sockets, NAT, and DNS underneath.
+- Name resolution, forwarding, and policy are separate hops in the path.
+- A network issue is not understood until you can describe where the next packet should go.
 
-## Troubleshooting Approach
-Start by proving where the path breaks: name resolution, route selection, listener binding, translation, or policy. Packet capture or explicit socket inspection is often the fastest way to stop guessing.
+## Lab Focus
+Use the lab to prove how Docker connects containers with built-in network modes.
+- Key commands:
+  - `docker network create net-lab`
+  - `docker run -d --name net-a --network net-lab alpine:3.20 sleep 300`
+  - `docker run -d --name net-b --network net-lab alpine:3.20 sleep 300`
+- Finish only when:
+  - All steps executed without unresolved errors.
+  - You can explain observed behavior from first principles.
 
-## Evolution & Alternatives
-Docker's user experience made containers mainstream, but many production stacks now split build, runtime, and orchestration concerns across separate tools. Learning Docker remains useful because it provides the cleanest introduction to the object model.
+## Common Mistakes
+- Changing app config before proving the packet path.
+- Treating DNS, routing, and firewall behavior as one problem.
 
-## Lab Tie-In
-Use the lab to prove the mechanism, not just to finish a list of commands. Before you begin, decide which output line or state change will prove the concept above is real.
-
-### Commands You Will See
-- `docker network create net-lab`
-- `docker run -d --name net-a --network net-lab alpine:3.20 sleep 300`
-- `docker run -d --name net-b --network net-lab alpine:3.20 sleep 300`
-- `docker exec net-a ping -c1 net-b`
-
-### What Success Looks Like
-- All steps executed without unresolved errors.
-- You can explain observed behavior from first principles.
-- You identified one failure mode and first diagnostic action.
-
-### Questions To Answer After The Lab
-- Which result proves service-name resolution on user-defined networks?
-- What exposure risk appears when default network behavior is assumed safe?
-
-## Next Steps
-Run [LAB.md](./LAB.md) and do not mark it complete until you can explain both the mechanism and the failure mode.
-After that, continue to [Dockerfile](../06-dockerfile/README.md).
+## Next
+Read the lab after this README and use the output as proof, not as a checklist.
+Then continue to [Dockerfile](../06-dockerfile/README.md).

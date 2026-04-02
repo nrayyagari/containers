@@ -1,41 +1,30 @@
 # CRI
 
-## Context & Problem
-This topic explains how kubelet talks to runtimes through the Container Runtime Interface. In production, this matters because runtime-layer confusion leads engineers to inspect or restart the wrong component.
-CRI is not a runtime implementation. It is the contract between kubelet and a runtime.
+## What It Is
+CRI is the gRPC contract between kubelet and the container runtime. It is an interface, not a runtime by itself.
 
-## First Principles
-- Runtime stacks are layered and each layer has a different responsibility.
-- High-level managers handle images, snapshots, and lifecycle; low-level runtimes turn an OCI bundle into a running process.
-- The authoritative troubleshooting tool depends on which layer created and now manages the workload.
+## Why It Matters
+It matters because runtime failures are hard to fix when you inspect the wrong layer.
 
-## Production Implementation
-Decide which layer is authoritative for the workload you are examining. For Kubernetes-managed containers, `crictl` and runtime-manager state usually matter more than Docker output, and low-level runtime evidence matters more than guesses.
+## Key Points
+- Runtime stacks are layered and each layer has a different job.
+- High-level managers handle images and lifecycle; low-level runtimes create the process.
+- Use tools that match the layer that owns the workload.
 
-## Troubleshooting Approach
-Follow the request path one layer at a time: kubelet or CLI, runtime manager, shim, low-level runtime, and then the process itself. Restart nothing until you know which hop is lying or failing.
+## Lab Focus
+Use the lab to prove how kubelet talks to runtimes through the Container Runtime Interface.
+- Key commands:
+  - `systemctl status containerd --no-pager || true`
+  - `crictl info || true`
+  - `crictl ps -a || true`
+- Finish only when:
+  - All steps executed without unresolved errors.
+  - You can explain observed behavior from first principles.
 
-## Evolution & Alternatives
-The runtime ecosystem moved toward clearer interfaces and smaller responsibilities. That made the stack more composable, but it also means operators must know which layer they are standing on.
+## Common Mistakes
+- Collapsing several runtime layers into 'Docker is broken'.
+- Using the wrong CLI for the layer that owns the workload.
 
-## Lab Tie-In
-Use the lab to prove the mechanism, not just to finish a list of commands. Before you begin, decide which output line or state change will prove the concept above is real.
-
-### Commands You Will See
-- `systemctl status containerd --no-pager || true`
-- `crictl info || true`
-- `crictl ps -a || true`
-- `docker ps -a || true`
-
-### What Success Looks Like
-- All steps executed without unresolved errors.
-- You can explain observed behavior from first principles.
-- You identified one failure mode and first diagnostic action.
-
-### Questions To Answer After The Lab
-- Which command output is authoritative for kubelet-managed runtime state?
-- What node failure mode appears when CRI endpoint/runtime alignment is broken?
-
-## Next Steps
-Run [LAB.md](./LAB.md) and do not mark it complete until you can explain both the mechanism and the failure mode.
-After that, continue to [CRI-O](../04-crio/README.md).
+## Next
+Read the lab after this README and use the output as proof, not as a checklist.
+Then continue to [CRI-O](../04-crio/README.md).
