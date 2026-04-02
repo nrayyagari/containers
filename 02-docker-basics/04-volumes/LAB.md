@@ -29,9 +29,9 @@ Develop hands-on confidence for Volumes and prove understanding through observab
 - Remove resources: docker rm -f dk-lab net-a net-b 2>/dev/null || true; docker volume rm vol-lab 2>/dev/null || true; docker network rm net-lab 2>/dev/null || true
 
 ## Concept Check
-- Which output line is your strongest proof for this topic?
-- What breaks in production if this concept is misunderstood?
-- What are your first two diagnostic commands during incident response?
+- Which output proves data persistence across container lifecycle?
+- What data-loss scenario appears if teams store state only in writable layers?
+- Which backup/restore check should accompany volume adoption?
 
 ## Why This Lab Proves Understanding
 - It validates execution, interpretation, and operational cleanup.

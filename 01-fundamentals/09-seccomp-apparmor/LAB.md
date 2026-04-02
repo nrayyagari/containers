@@ -29,9 +29,9 @@ Develop hands-on confidence for Seccomp Apparmor and prove understanding through
 - Remove containers: docker rm -f fnd-lab ns-lab cg-lab sec-lab 2>/dev/null || true
 
 ## Concept Check
-- Which output line is your strongest proof for this topic?
-- What breaks in production if this concept is misunderstood?
-- What are your first two diagnostic commands during incident response?
+- Which evidence confirms syscall/LSM controls are active on this host?
+- What attack path opens when seccomp/AppArmor profiles are bypassed?
+- Which first diagnostic check tells you profile enforcement is missing?
 
 ## Why This Lab Proves Understanding
 - It validates execution, interpretation, and operational cleanup.

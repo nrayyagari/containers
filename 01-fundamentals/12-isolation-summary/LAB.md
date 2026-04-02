@@ -29,9 +29,9 @@ Develop hands-on confidence for Isolation Summary and prove understanding throug
 - Remove containers: docker rm -f fnd-lab ns-lab cg-lab sec-lab 2>/dev/null || true
 
 ## Concept Check
-- Which output line is your strongest proof for this topic?
-- What breaks in production if this concept is misunderstood?
-- What are your first two diagnostic commands during incident response?
+- Which control boundary is easiest to verify quickly during incident response?
+- Which boundary is most often misunderstood by new platform engineers?
+- What checklist item should be mandatory before production hardening sign-off?
 
 ## Why This Lab Proves Understanding
 - It validates execution, interpretation, and operational cleanup.

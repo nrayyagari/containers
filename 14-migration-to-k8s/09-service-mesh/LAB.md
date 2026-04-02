@@ -30,9 +30,9 @@ Assess when service mesh adds value and when it adds unnecessary complexity.
 - Remove test mesh resources and disable test injection settings.
 
 ## Concept Check
-- Which problem does mesh solve better than app-library-only approach?
-- When does mesh complexity exceed value?
-- Which KPI should decide rollout continuation?
+- Which specific control became easier with mesh in your tested flow?
+- What operational overhead did you observe that must be budgeted?
+- Which KPI should decide whether to continue or pause mesh rollout?
 
 ## Why This Lab Proves Understanding
 - You performed balanced trade-off analysis, not one-sided adoption.

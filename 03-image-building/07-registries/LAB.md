@@ -30,9 +30,9 @@ Develop hands-on confidence for Registries and prove understanding through obser
 - Remove images and temp files: docker rmi img-lab:latest 2>/dev/null || true; rm -rf /tmp/img-lab /tmp/dbk-lab
 
 ## Concept Check
-- Which output line is your strongest proof for this topic?
-- What breaks in production if this concept is misunderstood?
-- What are your first two diagnostic commands during incident response?
+- Which artifact identity signal in this lab is strongest for release safety?
+- What drift risk appears when relying on mutable tags only?
+- Which release rule should require digest evidence before deploy?
 
 ## Why This Lab Proves Understanding
 - It validates execution, interpretation, and operational cleanup.

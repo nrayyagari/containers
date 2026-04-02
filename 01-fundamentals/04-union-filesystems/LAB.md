@@ -29,9 +29,9 @@ Develop hands-on confidence for Union Filesystems and prove understanding throug
 - Remove containers: docker rm -f fnd-lab ns-lab cg-lab sec-lab 2>/dev/null || true
 
 ## Concept Check
-- Which output line is your strongest proof for this topic?
-- What breaks in production if this concept is misunderstood?
-- What are your first two diagnostic commands during incident response?
+- Which observation proves writable container layer behavior vs image layers?
+- Why can ignoring copy-on-write behavior cause storage surprises?
+- Which command confirms where write amplification is happening?
 
 ## Why This Lab Proves Understanding
 - It validates execution, interpretation, and operational cleanup.

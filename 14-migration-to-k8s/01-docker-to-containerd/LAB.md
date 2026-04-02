@@ -36,9 +36,9 @@ Prove the difference between Docker CLI visibility and CRI runtime visibility us
 - COMMAND: docker rm -f runtime-compare 2>/dev/null || true
 
 ## Concept Check
-- Why can docker ps mislead you on a Kubernetes node?
-- Which command set should SREs trust first for kubelet runtime issues?
-- What incident delay occurs when teams debug the wrong runtime layer?
+- Which command pair proves Docker and CRI views can diverge on Kubernetes nodes?
+- What migration risk appears when teams keep Docker-only troubleshooting habits?
+- Which runbook entry should enforce CRI-first diagnostics after cutover?
 
 ## Why This Lab Proves Understanding
 - You validated behavior using both Docker and CRI evidence.

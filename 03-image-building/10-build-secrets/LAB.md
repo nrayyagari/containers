@@ -30,9 +30,9 @@ Develop hands-on confidence for Build Secrets and prove understanding through ob
 - Remove images and temp files: docker rmi img-lab:latest 2>/dev/null || true; rm -rf /tmp/img-lab /tmp/dbk-lab
 
 ## Concept Check
-- Which output line is your strongest proof for this topic?
-- What breaks in production if this concept is misunderstood?
-- What are your first two diagnostic commands during incident response?
+- Which evidence proves secret was available at build-time but not runtime?
+- What supply-chain leak risk appears if secret handling is wrong here?
+- Which CI assertion should fail build when secret leakage is detected?
 
 ## Why This Lab Proves Understanding
 - It validates execution, interpretation, and operational cleanup.

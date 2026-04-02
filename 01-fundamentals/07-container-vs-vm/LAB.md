@@ -29,9 +29,9 @@ Develop hands-on confidence for Container Vs Vm and prove understanding through 
 - Remove containers: docker rm -f fnd-lab ns-lab cg-lab sec-lab 2>/dev/null || true
 
 ## Concept Check
-- Which output line is your strongest proof for this topic?
-- What breaks in production if this concept is misunderstood?
-- What are your first two diagnostic commands during incident response?
+- What kernel-sharing evidence proves this is a container, not a VM?
+- Which workload should still prefer a VM boundary, and why?
+- What production risk appears if teams treat containers as VM-equivalent isolation?
 
 ## Why This Lab Proves Understanding
 - It validates execution, interpretation, and operational cleanup.

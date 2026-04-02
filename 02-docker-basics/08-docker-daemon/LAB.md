@@ -30,9 +30,9 @@ Develop hands-on confidence for Docker Daemon and prove understanding through ob
 - Remove resources: docker rm -f dk-lab net-a net-b 2>/dev/null || true; docker volume rm vol-lab 2>/dev/null || true; docker network rm net-lab 2>/dev/null || true
 
 ## Concept Check
-- Which output line is your strongest proof for this topic?
-- What breaks in production if this concept is misunderstood?
-- What are your first two diagnostic commands during incident response?
+- Which daemon/runtime signal is most useful when container starts fail?
+- What platform risk appears from unsafe daemon configuration defaults?
+- Which diagnostic command should be first for daemon-level incidents?
 
 ## Why This Lab Proves Understanding
 - It validates execution, interpretation, and operational cleanup.

@@ -30,9 +30,9 @@ Prove why digest-based references are safer than tag-only references for migrati
 - COMMAND: docker rmi nginx:1.27-alpine 2>/dev/null || true
 
 ## Concept Check
-- Why can mutable tags cause cross-environment drift?
-- What policy should block promotion when digest evidence is missing?
-- How does digest pinning help rollback confidence?
+- Which digest/manifest evidence proves artifact immutability for rollout safety?
+- What outage class is reduced by digest pinning during migration?
+- Which promotion gate should fail when digest evidence is missing?
 
 ## Why This Lab Proves Understanding
 - You tied artifact identity directly to rollout safety.

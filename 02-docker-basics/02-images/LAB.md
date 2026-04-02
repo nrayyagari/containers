@@ -30,9 +30,9 @@ Develop hands-on confidence for Images and prove understanding through observabl
 - Remove resources: docker rm -f dk-lab net-a net-b 2>/dev/null || true; docker volume rm vol-lab 2>/dev/null || true; docker network rm net-lab 2>/dev/null || true
 
 ## Concept Check
-- Which output line is your strongest proof for this topic?
-- What breaks in production if this concept is misunderstood?
-- What are your first two diagnostic commands during incident response?
+- Which output proves image identity vs container runtime state?
+- What production drift risk appears if image provenance is not verified?
+- Which pre-deploy check should block unknown image origin?
 
 ## Why This Lab Proves Understanding
 - It validates execution, interpretation, and operational cleanup.

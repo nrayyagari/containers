@@ -29,9 +29,9 @@ Develop hands-on confidence for Control Groups Cgroups and prove understanding t
 - Remove containers: docker rm -f fnd-lab ns-lab cg-lab sec-lab 2>/dev/null || true
 
 ## Concept Check
-- Which output line is your strongest proof for this topic?
-- What breaks in production if this concept is misunderstood?
-- What are your first two diagnostic commands during incident response?
+- Which metric or file proves cgroup enforcement is active?
+- What failure mode appears when limits are set but not enforced as expected?
+- Which diagnostic step distinguishes cgroup misconfig from app memory leak?
 
 ## Why This Lab Proves Understanding
 - It validates execution, interpretation, and operational cleanup.

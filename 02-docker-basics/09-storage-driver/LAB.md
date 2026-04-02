@@ -30,9 +30,9 @@ Develop hands-on confidence for Storage Driver and prove understanding through o
 - Remove resources: docker rm -f dk-lab net-a net-b 2>/dev/null || true; docker volume rm vol-lab 2>/dev/null || true; docker network rm net-lab 2>/dev/null || true
 
 ## Concept Check
-- Which output line is your strongest proof for this topic?
-- What breaks in production if this concept is misunderstood?
-- What are your first two diagnostic commands during incident response?
+- Which observation indicates storage-driver impact on behavior/performance?
+- What failure pattern appears when storage-driver assumptions are wrong?
+- Which command helps confirm actual driver and backing filesystem details?
 
 ## Why This Lab Proves Understanding
 - It validates execution, interpretation, and operational cleanup.

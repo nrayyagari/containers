@@ -29,9 +29,9 @@ Develop hands-on confidence for High Level Runtime and prove understanding throu
 - Remove runtime test container: docker rm -f rt-lab 2>/dev/null || true
 
 ## Concept Check
-- Which output line is your strongest proof for this topic?
-- What breaks in production if this concept is misunderstood?
-- What are your first two diagnostic commands during incident response?
+- Which output proves high-level manager control over container lifecycle?
+- What operational risk appears if high-level and low-level roles are confused?
+- Which check identifies manager-layer bottlenecks fastest?
 
 ## Why This Lab Proves Understanding
 - It validates execution, interpretation, and operational cleanup.

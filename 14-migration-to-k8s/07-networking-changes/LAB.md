@@ -42,9 +42,9 @@ YAML
 - COMMAND: kubectl delete ns net-mig --ignore-not-found
 
 ## Concept Check
-- Why is pod-IP reachability insufficient as health signal?
-- Which rollout order causes policy outages?
-- What signal differentiates policy deny from app failure?
+- Which test result proves policy-driven connectivity change (not app failure)?
+- What sequencing error in policy rollout can create accidental outage?
+- Which signal should confirm safe re-allow after deny baseline?
 
 ## Why This Lab Proves Understanding
 - You verified both service-discovery and segmentation behavior.

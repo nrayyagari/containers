@@ -31,9 +31,9 @@ Validate that CRI endpoint configuration is correct for node runtime communicati
 - No cleanup required.
 
 ## Concept Check
-- What exact mismatch causes node NotReady during runtime migration?
-- Why must crictl and kubelet target the same endpoint when debugging?
-- Which log signal confirms endpoint recovery?
+- Which endpoint mismatch would cause kubelet-runtime communication failure?
+- Which log signal confirms CRI recovery after fixing endpoint config?
+- What preflight check should be mandatory for every new node?
 
 ## Why This Lab Proves Understanding
 - You validated endpoint correctness with both config and runtime evidence.

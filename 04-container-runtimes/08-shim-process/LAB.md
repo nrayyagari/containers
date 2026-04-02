@@ -29,9 +29,9 @@ Develop hands-on confidence for Shim Process and prove understanding through obs
 - Remove runtime test container: docker rm -f rt-lab 2>/dev/null || true
 
 ## Concept Check
-- Which output line is your strongest proof for this topic?
-- What breaks in production if this concept is misunderstood?
-- What are your first two diagnostic commands during incident response?
+- Which process evidence in this lab confirms shim responsibility?
+- What symptom suggests shim-level failure rather than app crash?
+- Which command should verify shim health before deeper escalation?
 
 ## Why This Lab Proves Understanding
 - It validates execution, interpretation, and operational cleanup.

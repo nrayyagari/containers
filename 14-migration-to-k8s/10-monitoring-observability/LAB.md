@@ -39,9 +39,9 @@ Build a migration observability checklist with baseline and post-change evidence
 - COMMAND: kubectl delete deployment obs-demo --ignore-not-found
 
 ## Concept Check
-- Why is pod Running status insufficient as migration success signal?
-- Which two signals detect silent correctness regressions earliest?
-- What rollback trigger would you enforce and why?
+- Which signal correlation proved deployment change impact on system behavior?
+- Why is pod Running an insufficient migration success indicator?
+- What rollback threshold should be codified before production migration?
 
 ## Why This Lab Proves Understanding
 - You connected operational decisions to measurable telemetry.

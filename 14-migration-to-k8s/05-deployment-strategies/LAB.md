@@ -32,9 +32,9 @@ Practice rollout and rollback flow with explicit verification.
 - COMMAND: kubectl delete deployment rollout-demo --ignore-not-found
 
 ## Concept Check
-- Why is rollback speed a core reliability metric?
-- Which probe misconfiguration can break safe rollouts?
-- When should canary be used over rolling update?
+- Which rollout/rollback evidence shows release safety is actually working?
+- What probe or readiness mistake can turn rollout into outage?
+- Which explicit rollback trigger should be documented before migration wave?
 
 ## Why This Lab Proves Understanding
 - You exercised full release safety cycle, not only deployment creation.

@@ -30,9 +30,9 @@ Develop hands-on confidence for Layer Caching and prove understanding through ob
 - Remove images and temp files: docker rmi img-lab:latest 2>/dev/null || true; rm -rf /tmp/img-lab /tmp/dbk-lab
 
 ## Concept Check
-- Which output line is your strongest proof for this topic?
-- What breaks in production if this concept is misunderstood?
-- What are your first two diagnostic commands during incident response?
+- Which rebuild step demonstrates cache hit or invalidation most clearly?
+- What CI latency/cost issue appears from poor layer ordering?
+- Which Dockerfile rearrangement would improve cache stability?
 
 ## Why This Lab Proves Understanding
 - It validates execution, interpretation, and operational cleanup.

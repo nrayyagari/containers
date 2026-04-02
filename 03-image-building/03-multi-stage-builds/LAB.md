@@ -30,9 +30,9 @@ Develop hands-on confidence for Multi Stage Builds and prove understanding throu
 - Remove images and temp files: docker rmi img-lab:latest 2>/dev/null || true; rm -rf /tmp/img-lab /tmp/dbk-lab
 
 ## Concept Check
-- Which output line is your strongest proof for this topic?
-- What breaks in production if this concept is misunderstood?
-- What are your first two diagnostic commands during incident response?
+- Which output proves build-only artifacts are excluded from final stage?
+- What security or size risk appears if multi-stage is not used here?
+- Which check confirms no toolchain residue remains in runtime image?
 
 ## Why This Lab Proves Understanding
 - It validates execution, interpretation, and operational cleanup.

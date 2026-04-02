@@ -30,9 +30,9 @@ Develop hands-on confidence for Dockerfile Basics and prove understanding throug
 - Remove images and temp files: docker rmi img-lab:latest 2>/dev/null || true; rm -rf /tmp/img-lab /tmp/dbk-lab
 
 ## Concept Check
-- Which output line is your strongest proof for this topic?
-- What breaks in production if this concept is misunderstood?
-- What are your first two diagnostic commands during incident response?
+- Which instruction order choice in this lab most impacted the final artifact?
+- What failure pattern appears when Dockerfile intent and output diverge?
+- Which command proves resulting image behavior matches design?
 
 ## Why This Lab Proves Understanding
 - It validates execution, interpretation, and operational cleanup.

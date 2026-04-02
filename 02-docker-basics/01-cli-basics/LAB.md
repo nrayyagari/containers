@@ -30,9 +30,9 @@ Develop hands-on confidence for Cli Basics and prove understanding through obser
 - Remove resources: docker rm -f dk-lab net-a net-b 2>/dev/null || true; docker volume rm vol-lab 2>/dev/null || true; docker network rm net-lab 2>/dev/null || true
 
 ## Concept Check
-- Which output line is your strongest proof for this topic?
-- What breaks in production if this concept is misunderstood?
-- What are your first two diagnostic commands during incident response?
+- Which Docker CLI command in this lab gave the most authoritative state?
+- What mistake occurs when teams rely only on `docker ps` snapshots?
+- Which command pair should always be run together for quick triage?
 
 ## Why This Lab Proves Understanding
 - It validates execution, interpretation, and operational cleanup.

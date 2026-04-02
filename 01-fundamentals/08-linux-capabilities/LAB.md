@@ -28,9 +28,9 @@ Develop hands-on confidence for Linux Capabilities and prove understanding throu
 - Remove containers: docker rm -f fnd-lab ns-lab cg-lab sec-lab 2>/dev/null || true
 
 ## Concept Check
-- Which output line is your strongest proof for this topic?
-- What breaks in production if this concept is misunderstood?
-- What are your first two diagnostic commands during incident response?
+- Which command result proved capability-based least privilege in practice?
+- Why is add-only-required capability safer than default capability set?
+- What incident class becomes more likely when excessive capabilities are allowed?
 
 ## Why This Lab Proves Understanding
 - It validates execution, interpretation, and operational cleanup.

@@ -76,9 +76,9 @@ YAML
 - COMMAND: kubectl delete pvc mig-pvc --ignore-not-found
 
 ## Concept Check
-- Why is successful restart not proof of durable storage design?
-- How can reclaim-policy misunderstanding cause data loss?
-- Which backup test must be mandatory before migration cutover?
+- Which evidence proves persistence across pod recreation, not just restart luck?
+- What reclaim-policy misunderstanding can cause irreversible data loss?
+- Which restore test should be required before stateful migration cutover?
 
 ## Why This Lab Proves Understanding
 - You validated persistence using stateful lifecycle evidence.

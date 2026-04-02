@@ -32,9 +32,9 @@ Separate non-sensitive config from secrets and validate runtime injection.
 - COMMAND: kubectl delete secret app-secret --ignore-not-found
 
 ## Concept Check
-- Why is baking secrets into images unsafe even with private registry?
-- Which event should trigger immediate secret rotation?
-- How do you detect accidental secret leak in logs/manifests?
+- Which output proves config and secret separation is correctly implemented?
+- What security incident risk appears if secrets are image-baked or log-exposed?
+- Which rotation event must trigger immediate credentials replacement?
 
 ## Why This Lab Proves Understanding
 - You validated separation of concerns with live workload evidence.

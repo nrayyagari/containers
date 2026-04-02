@@ -29,9 +29,9 @@ Develop hands-on confidence for Low Level Runtime and prove understanding throug
 - Remove runtime test container: docker rm -f rt-lab 2>/dev/null || true
 
 ## Concept Check
-- Which output line is your strongest proof for this topic?
-- What breaks in production if this concept is misunderstood?
-- What are your first two diagnostic commands during incident response?
+- Which process or metadata evidence proves low-level runtime execution path?
+- What breaks when OCI/runtime assumptions differ across environments?
+- Which first command confirms runtime layer ownership of failure?
 
 ## Why This Lab Proves Understanding
 - It validates execution, interpretation, and operational cleanup.

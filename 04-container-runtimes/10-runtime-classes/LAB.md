@@ -29,9 +29,9 @@ Develop hands-on confidence for Runtime Classes and prove understanding through 
 - Remove runtime test container: docker rm -f rt-lab 2>/dev/null || true
 
 ## Concept Check
-- Which output line is your strongest proof for this topic?
-- What breaks in production if this concept is misunderstood?
-- What are your first two diagnostic commands during incident response?
+- Which workload profile in your environment truly needs RuntimeClass separation?
+- What security/performance risk appears if RuntimeClass is misapplied broadly?
+- Which validation must run before enabling a new runtime handler?
 
 ## Why This Lab Proves Understanding
 - It validates execution, interpretation, and operational cleanup.

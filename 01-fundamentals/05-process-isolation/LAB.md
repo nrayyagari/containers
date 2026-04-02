@@ -29,9 +29,9 @@ Develop hands-on confidence for Process Isolation and prove understanding throug
 - Remove containers: docker rm -f fnd-lab ns-lab cg-lab sec-lab 2>/dev/null || true
 
 ## Concept Check
-- Which output line is your strongest proof for this topic?
-- What breaks in production if this concept is misunderstood?
-- What are your first two diagnostic commands during incident response?
+- Which process-tree evidence proves container process isolation?
+- How can host PID assumptions cause incorrect incident conclusions?
+- What first check separates container crash from host-level process issue?
 
 ## Why This Lab Proves Understanding
 - It validates execution, interpretation, and operational cleanup.

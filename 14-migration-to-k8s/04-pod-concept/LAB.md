@@ -30,9 +30,9 @@ Understand pod-style co-location and why it is not equivalent to arbitrary conta
 - COMMAND: docker network rm pod-sim-net 2>/dev/null || true
 
 ## Concept Check
-- Why is one-pod-equals-one-container an incomplete model?
-- What should never be colocated in one pod?
-- Which pod-level signal is critical during crash-loop triage?
+- Which observation in this lab disproves one-container-equals-one-pod thinking?
+- What architecture mistake appears when unrelated containers are colocated?
+- Which pod-level signal should lead triage for startup instability?
 
 ## Why This Lab Proves Understanding
 - You validated both behavioral and architectural differences.

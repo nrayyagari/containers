@@ -30,9 +30,9 @@ Develop hands-on confidence for Best Practices and prove understanding through o
 - Remove images and temp files: docker rmi img-lab:latest 2>/dev/null || true; rm -rf /tmp/img-lab /tmp/dbk-lab
 
 ## Concept Check
-- Which output line is your strongest proof for this topic?
-- What breaks in production if this concept is misunderstood?
-- What are your first two diagnostic commands during incident response?
+- Which best-practice change gave the highest risk reduction in this topic?
+- What regression appears if this practice is skipped under delivery pressure?
+- Which automated check should enforce this in CI?
 
 ## Why This Lab Proves Understanding
 - It validates execution, interpretation, and operational cleanup.
