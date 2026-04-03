@@ -9,16 +9,16 @@ This module separates image content, writable-layer content, volumes, bind mount
 3. If a lab exists, do not move on until you can explain the proof signal.
 
 ## Topic Map
-- [01-bind-mounts](./01-bind-mounts/README.md): how host paths are mounted directly into containers.
-- [02-named-volumes](./02-named-volumes/README.md): how Docker-managed volumes persist data independently of containers.
-- [03-tmpfs-mounts](./03-tmpfs-mounts/README.md): how in-memory mounts trade durability for speed and cleanliness.
-- [04-volume-drivers](./04-volume-drivers/README.md): how plugins extend Docker volume backends.
-- [05-storage-drivers-overlay](./05-storage-drivers-overlay/README.md): how overlay-based storage drivers implement writable layers.
-- [06-nfs-volumes](./06-nfs-volumes/README.md): how network filesystems enable shared data across hosts.
-- [07-volume-permissions](./07-volume-permissions/README.md): how UID, GID, and mode bits affect container file access.
-- [08-persistence-strategies](./08-persistence-strategies/README.md): how to separate ephemeral state from durable state.
-- [09-inode-management](./09-inode-management/README.md): how inode exhaustion breaks containers even when disk space remains.
-- [10-backup-restore](./10-backup-restore/README.md): how to protect and restore container data safely.
+- [01-bind-mounts](./01-bind-mounts/README.md) | [Lab](./01-bind-mounts/LAB.md): how host paths are mounted directly into containers.
+- [02-named-volumes](./02-named-volumes/README.md) | [Lab](./02-named-volumes/LAB.md): how Docker-managed volumes persist data independently of containers.
+- [03-tmpfs-mounts](./03-tmpfs-mounts/README.md) | [Lab](./03-tmpfs-mounts/LAB.md): how in-memory mounts trade durability for speed and cleanliness.
+- [04-volume-drivers](./04-volume-drivers/README.md) | [Lab](./04-volume-drivers/LAB.md): how plugins extend Docker volume backends.
+- [05-storage-drivers-overlay](./05-storage-drivers-overlay/README.md) | [Lab](./05-storage-drivers-overlay/LAB.md): how overlay-based storage drivers implement writable layers.
+- [06-nfs-volumes](./06-nfs-volumes/README.md) | [Lab](./06-nfs-volumes/LAB.md): how network filesystems enable shared data across hosts.
+- [07-volume-permissions](./07-volume-permissions/README.md) | [Lab](./07-volume-permissions/LAB.md): how UID, GID, and mode bits affect container file access.
+- [08-persistence-strategies](./08-persistence-strategies/README.md) | [Lab](./08-persistence-strategies/LAB.md): how to separate ephemeral state from durable state.
+- [09-inode-management](./09-inode-management/README.md) | [Lab](./09-inode-management/LAB.md): how inode exhaustion breaks containers even when disk space remains.
+- [10-backup-restore](./10-backup-restore/README.md) | [Lab](./10-backup-restore/LAB.md): how to protect and restore container data safely.
 
 ## Move On When
 - You can meet this module's main goal: Know where the data really lives and what survives a restart.
