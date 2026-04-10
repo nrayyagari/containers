@@ -106,6 +106,18 @@ ls -l /proc/self/ns/pid
 ls /proc | grep '^[0-9]' | head
 ```
 
+### Q: Does `ps` get its information from `/proc`?
+
+A: Yes. `ps` primarily reads process information from the `/proc` filesystem.
+
+Important wording:
+
+- `/proc` is a virtual filesystem, not just a folder
+- `/proc/1` is a directory inside that filesystem
+- `/proc/1/status` is a file inside that filesystem
+
+That is why PID namespace changes show up clearly through `/proc`.
+
 ### Q: If `NSpid:` shows only one number, is that wrong?
 
 A: No. Do not over-focus on that field. The clearer checks are:
@@ -335,6 +347,314 @@ A:
 - `containerd` stores image layers
 - `overlayfs` merges them into the container's `/`
 - `docker` adds metadata files and volumes on top
+
+### Q: Why did I still see host files after running `sudo nsenter -t <pid> -u sh`?
+
+A: Because `-u` enters only the UTS namespace.
+
+That changes only the hostname view. It does not change the filesystem view.
+
+So this behavior is expected:
+
+- `hostname` shows the container hostname
+- `ls` still shows host files if you did not also enter the mount namespace
+
+To see the container filesystem view too, include `-m`:
+
+```bash
+sudo nsenter -t <pid> -m -u sh
+```
+
+For a more complete "inside the container" view, include more namespaces:
+
+```bash
+sudo nsenter -t <pid> -m -p -u -n sh
+```
+
+## Network Namespace
+
+### Q: What problem does a network namespace solve?
+
+A: It gives a process its own network stack.
+
+That includes its own:
+
+- interfaces
+- IP addresses
+- routes
+- port bindings
+
+### Q: What is the simplest mental model for `net`?
+
+A: `net` answers: "Which interfaces, addresses, routes, and listening ports do I see?"
+
+### Q: What commands are the most useful for proving `net` isolation?
+
+A:
+
+```bash
+ip addr
+ip route
+ss -lntup
+ls -l /proc/self/ns/net
+sudo lsns -t net
+```
+
+### Q: What is the clearest host-versus-container comparison for `net`?
+
+A: Compare the namespace ID and interface list on the host and inside the container.
+
+On the host:
+
+```bash
+docker inspect -f '{{.State.Pid}} {{.Name}}' <container>
+ls -l /proc/1/ns/net
+ls -l /proc/$(docker inspect -f '{{.State.Pid}}' <container>)/ns/net
+```
+
+Inside the container:
+
+```bash
+ip addr
+ip route
+ls -l /proc/self/ns/net
+```
+
+If the `net:[...]` values differ, the container is in a different network namespace.
+
+### Q: What is a very common sign that a container is in a separate network namespace?
+
+A: The container sees its own interface layout, often including `lo` and one `eth0`, while the host sees many other interfaces and routes.
+
+### Q: What changes if the container uses `--network host`?
+
+A: Then the container shares the host network namespace instead of getting its own one.
+
+In that case:
+
+- interface names match the host
+- listening ports are in the host network stack
+- `ls -l /proc/self/ns/net` from a shell in that container matches the host value
+
+## Other Namespaces
+
+### Q: What does the IPC namespace isolate?
+
+A: Inter-process communication objects such as System V IPC and POSIX message queues.
+
+Practical mental model:
+
+- `ipc` answers: "Which shared memory segments, semaphores, and message queues do I see?"
+
+### Q: What does the user namespace isolate?
+
+A: User and group ID mappings and related privilege interpretation.
+
+Practical meaning:
+
+- a process can look like `root` inside the namespace
+- while mapping to a non-root identity outside it
+
+### Q: What does the cgroup namespace isolate?
+
+A: The process's view of cgroup paths.
+
+Practical meaning:
+
+- tools inside the container see cgroup paths relative to the container's own view
+- instead of the full host cgroup layout
+
+### Q: What does the time namespace isolate?
+
+A: Selected time offsets used by processes.
+
+This is less common in beginner container work, but it exists as another namespace type.
+
+## `nsenter`
+
+### Q: What is `nsenter` used for?
+
+A: `nsenter` starts a program inside one or more namespaces that already belong to an existing process.
+
+This is especially useful for:
+
+- debugging a running container
+- comparing host view and container view
+- inspecting namespaces even when container tools are minimal
+
+### Q: What does this command mean?
+
+```bash
+sudo nsenter -t "$pid" -m -p -u -n sh
+```
+
+A:
+
+- `sudo`: needed because entering another process's namespaces usually requires elevated privileges
+- `nsenter`: run a program inside namespaces of an existing process
+- `-t "$pid"`: target process PID
+- `-m`: enter mount namespace
+- `-p`: enter PID namespace
+- `-u`: enter UTS namespace
+- `-n`: enter network namespace
+- `sh`: start a shell after entering those namespaces
+
+Practical meaning:
+
+"Start a shell that sees the system the way that target process sees it for those namespace types."
+
+### Q: If I pass only some flags to `nsenter`, what happens?
+
+A: You enter only those namespaces.
+
+Everything else stays in your current namespace context.
+
+Example:
+
+```bash
+sudo nsenter -t <pid> -u sh
+```
+
+This changes hostname view only. Filesystem, process list, and network stay in the host view unless you also include `-m`, `-p`, or `-n`.
+
+### Q: What other namespace flags can `nsenter` use?
+
+A: Common namespace flags are:
+
+- `-m`: mount namespace
+- `-p`: PID namespace
+- `-u`: UTS namespace
+- `-n`: network namespace
+- `-i`: IPC namespace
+- `-U`: user namespace
+- `-C`: cgroup namespace
+- `-T`: time namespace
+
+Useful non-namespace flags include:
+
+- `-t <pid>`: target process
+- `-a`: enter all namespaces available from the target
+
+## Bind Mounts, Logs, and Host Access
+
+### Q: Can a normal container mount a host directory?
+
+A: Yes. That is very common and does not require a privileged container.
+
+Example:
+
+```bash
+docker run -it --rm -v /home/laborant/repos:/data:rw busybox sh
+```
+
+This means:
+
+- start a temporary interactive `busybox` container
+- mount `/home/laborant/repos` from the host into `/data` inside the container
+- allow read-write access
+
+### Q: What is the practical effect of a bind mount like `/home/laborant/repos:/data:rw`?
+
+A: Files under `/data` inside the container are the same files as `/home/laborant/repos` on the host.
+
+So if the container writes to `/data/test.txt`, the host gets:
+
+```bash
+/home/laborant/repos/test.txt
+```
+
+### Q: Why are bind mounts common?
+
+A: Common reasons include:
+
+- development: mount source code into the container
+- persistence: keep data outside the container lifecycle
+- configuration: provide host-side config or certificates
+- output sharing: collect reports, backups, or build artifacts on the host
+- observability: let the container write logs to host storage
+
+### Q: Are host-mounted log directories used for observability?
+
+A: Yes. That is a common pattern, especially for applications that write logs to files.
+
+Example:
+
+```bash
+docker run -d -v /var/log/myapp:/app/logs myapp
+```
+
+Then:
+
+- the app writes to `/app/logs` inside the container
+- the files are really stored at `/var/log/myapp` on the host
+- host-side tools or log shippers can collect them later
+
+### Q: Is writing logs to files the only common container logging pattern?
+
+A: No. In modern container platforms, the preferred pattern is often to log to `stdout` and `stderr`.
+
+Then the container runtime captures those streams directly.
+
+### Q: What do `stdout` and `stderr` mean?
+
+A:
+
+- `stdout` = standard output, for normal program output
+- `stderr` = standard error, for error messages and diagnostics
+
+Container platforms commonly collect both streams automatically.
+
+## Privileged Containers
+
+### Q: What is a privileged container?
+
+A: A privileged container is a container started with very broad access to the host, usually with:
+
+```bash
+docker run --privileged ...
+```
+
+Practical meaning:
+
+- it gets almost all Linux capabilities
+- it gets broad device access
+- several normal security restrictions are relaxed
+
+### Q: What can a privileged container often do that a normal container cannot?
+
+A: Typical examples include:
+
+- mount filesystems
+- perform lower-level network administration
+- access more devices under `/dev`
+- change settings that require stronger capabilities
+
+A simple demo inside a privileged container is:
+
+```bash
+mkdir -p /tmp/mnt-demo
+mount -t tmpfs tmpfs /tmp/mnt-demo
+mount | grep /tmp/mnt-demo
+```
+
+That often works in a privileged container and fails with `permission denied` in a normal container.
+
+### Q: Can a privileged container affect the host?
+
+A: Potentially yes.
+
+Important distinction:
+
+- namespaces may still isolate some views such as hostname, mounts, or PIDs
+- but the kernel is shared with the host
+- broad capabilities and device access can reduce isolation significantly
+
+Examples of host risk include:
+
+- modifying host files through bind mounts
+- affecting host networking in some setups
+- using exposed devices
+- controlling the Docker daemon if its socket is mounted into the container
 
 ## Troubleshooting Approach
 
